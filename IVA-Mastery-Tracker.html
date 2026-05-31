@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image / Video / Audio Mastery — Roadmap & Question Bank</title>
+<style>
+:root{--bg:#0a0c10;--bg2:#111418;--bg3:#181d24;--bg4:#1e2530;--border:#252e3d;--border2:#2e3d52;--text:#dde4f0;--muted:#6b7a99;--dim:#3d4d66;--iva:#34d399;--blue:#60a5fa;--green:#4ade80;--amber:#fbbf24;--red:#f87171;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Fira Code',monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 24px 24px;text-align:center}
+.hero-tag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--iva);text-transform:uppercase;margin-bottom:8px}
+.hero h1{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--text);margin-bottom:6px}
+.hero-sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+.hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:20px}
+.stat{text-align:center}.stat-val{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--iva)}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:.05em}
+.overall-bar{max-width:480px;margin:0 auto 8px;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.overall-fill{height:100%;background:linear-gradient(90deg,#059669,var(--iva));border-radius:4px;transition:width .5s}
+.overall-label{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.sources-note{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:8px 16px;max-width:700px;margin:10px auto 0;font-size:11px;color:var(--muted);font-family:var(--mono)}
+.phase-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.phase-btn{font-family:var(--mono);font-size:11px;padding:5px 14px;border:1px solid var(--border2);border-radius:4px;background:var(--bg3);color:var(--muted);cursor:pointer;transition:all .15s}
+.phase-btn:hover{color:var(--text);border-color:var(--muted)}
+.phase-btn.active{color:var(--iva);border-color:var(--iva);background:rgba(52,211,153,.07)}
+.module-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;gap:6px;flex-wrap:wrap}
+.mod-btn{font-family:var(--mono);font-size:10px;padding:4px 10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--dim);cursor:pointer;transition:all .15s}
+.mod-btn:hover{color:var(--muted);border-color:var(--border2)}
+.mod-btn.done{border-color:var(--green);color:var(--green)}
+.mod-btn.partial{border-color:var(--amber);color:var(--amber)}
+.content{max-width:1100px;margin:0 auto;padding:24px}
+.phase-header{font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--iva);text-transform:uppercase;padding:16px 0 8px;margin-top:8px}
+.module{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden}
+.module-head{padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;user-select:none;transition:background .15s}
+.module-head:hover{background:var(--bg3)}
+.module-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--dim);width:32px;flex-shrink:0}
+.module-icon{font-size:20px;flex-shrink:0}
+.module-info{flex:1}.module-title{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text)}
+.module-desc{font-size:12px;color:var(--muted);margin-top:2px}
+.module-right{text-align:right;flex-shrink:0}
+.mod-count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.mod-badge{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:3px;margin-top:3px;display:inline-block}
+.badge-ns{background:rgba(61,77,102,.4);color:var(--dim)}
+.badge-ip{background:rgba(251,191,36,.1);color:var(--amber)}
+.badge-done{background:rgba(74,222,128,.1);color:var(--green)}
+.module-chevron{color:var(--dim);font-size:11px;transition:transform .2s;flex-shrink:0}
+.module.open .module-chevron{transform:rotate(90deg)}
+.mod-bar{height:3px;background:var(--bg4);margin:0 20px}
+.mod-bar-fill{height:100%;background:var(--iva);transition:width .4s}
+.module.open .mod-bar{display:none}
+.module-body{display:none;border-top:1px solid var(--border)}
+.module.open .module-body{display:block}
+.q-table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg3)}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th:first-child{width:42px;text-align:center}th:nth-child(2){width:44px}
+th:nth-child(4){width:80px}th:nth-child(5){width:90px}th:last-child{width:80px}
+tbody tr{border-bottom:1px solid rgba(37,46,61,.6);transition:background .1s;cursor:pointer}
+tbody tr:hover{background:rgba(52,211,153,.03)}
+tbody tr.checked{opacity:.45}tbody tr:last-child{border-bottom:none}
+td{padding:9px 12px;font-size:13px;vertical-align:middle}td:first-child{text-align:center}
+.cb{width:16px;height:16px;border:1.5px solid var(--border2);border-radius:3px;display:inline-flex;align-items:center;justify-content:center}
+tr.checked .cb{background:var(--iva);border-color:var(--iva)}
+.cb-check{display:none;font-size:10px;font-weight:800;color:var(--bg)}
+tr.checked .cb-check{display:block}
+.q-num{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.q-text{color:var(--text);line-height:1.5}tr.checked .q-text{text-decoration:line-through;color:var(--dim)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;font-weight:600;letter-spacing:.04em}
+.tag-theory{background:rgba(96,165,250,.12);color:var(--blue);border:1px solid rgba(96,165,250,.25)}
+.tag-code{background:rgba(52,211,153,.12);color:var(--iva);border:1px solid rgba(52,211,153,.25)}
+.tag-debug{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.diff{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:.04em}
+.diff-B{background:rgba(74,222,128,.1);color:var(--green)}
+.diff-I{background:rgba(251,191,36,.1);color:var(--amber)}
+.diff-A{background:rgba(248,113,113,.1);color:var(--red)}
+.issue-input{width:52px;font-family:var(--mono);font-size:10px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;color:var(--muted);padding:2px 5px;outline:none}
+.issue-input:focus{border-color:var(--iva);color:var(--text)}
+.issue-open{display:block;font-family:var(--mono);font-size:9px;color:var(--dim);text-decoration:none;margin-top:2px}
+.issue-open.active{color:var(--blue)}.issue-open.active:hover{text-decoration:underline}
+td.issue-cell{font-size:11px}
+.mod-stats{display:flex;gap:20px;padding:12px 20px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.ms{color:var(--muted)}.ms span{font-family:var(--mono);color:var(--iva);font-weight:700}
+.mod-prog-bar{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:6px;align-self:center;min-width:80px}
+.mod-prog-fill{height:100%;background:var(--iva);border-radius:3px;transition:width .4s}
+.footer{text-align:center;padding:32px;font-family:var(--mono);font-size:11px;color:var(--dim);border-top:1px solid var(--border);margin-top:32px}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-tag">// complete mastery path</div>
+  <h1>IMAGE / VIDEO / AUDIO MASTERY</h1>
+  <div class="hero-sub">V4L2 → OpenCV → FFmpeg → GStreamer → Codecs → Streaming → DSP → AI Pipelines · 30 MODULES</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-val" id="s-modules">30</div><div class="stat-label">Modules</div></div>
+    <div class="stat"><div class="stat-val" id="s-total">0</div><div class="stat-label">Questions</div></div>
+    <div class="stat"><div class="stat-val">3</div><div class="stat-label">Phases</div></div>
+    <div class="stat"><div class="stat-val">∞</div><div class="stat-label">Pipelines</div></div>
+  </div>
+  <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  <div class="overall-label">
+    <b id="done-count">0</b> / <b id="total-count">0</b> questions done &nbsp;
+    <b id="pct-label">0%</b> overall &nbsp;
+    <b id="mod-done">0</b> / 30 modules complete
+  </div>
+  <div class="sources-note">Sources: V4L2_kernel_docs · GStreamer_docs · OpenCV_docs · FFmpeg_docs · ALSA_docs · PipeWire_docs · NVIDIA_DeepStream · Opus_spec · GStreamer_App_Dev_Manual</div>
+</div>
+<nav class="phase-nav">
+  <button class="phase-btn active" onclick="filterPhase(0)">All phases</button>
+  <button class="phase-btn" onclick="filterPhase(1)">Phase 01 · Capture &amp; Image Processing</button>
+  <button class="phase-btn" onclick="filterPhase(2)">Phase 02 · Video Codecs &amp; Audio</button>
+  <button class="phase-btn" onclick="filterPhase(3)">Phase 03 · AI Pipelines, Streaming &amp; Advanced</button>
+</nav>
+<div class="module-nav" id="mod-nav"></div>
+<div class="content" id="content"></div>
+<div class="footer">IMAGE / VIDEO / AUDIO MASTERY · 30 MODULES · CAPTURE. PROCESS. ENCODE. STREAM.</div>
+<script>
+const MODULES = [
+{id:'m01',phase:1,num:'01',icon:'📷',title:'V4L2 — Device Capture & Buffer Management',desc:'V4L2 device open, VIDIOC_QUERYCAP, formats, mmap/USERPTR/DMABUF, streaming, multi-plane.',qs:[
+['Write a C program to open a V4L2 capture device (/dev/video0), call VIDIOC_QUERYCAP to verify it supports video capture, and print the driver name, card, and capabilities bitmask.','C','B'],
+['Write a V4L2 program that calls VIDIOC_ENUM_FMT and VIDIOC_ENUM_FRAMESIZES to list all supported pixel formats and resolutions for a camera device.','C','B'],
+['Write a V4L2 program that sets the capture format to 1280x720 MJPEG using VIDIOC_S_FMT, reads back the negotiated format with VIDIOC_G_FMT, and prints the actual stride and image size.','C','B'],
+['Write a complete V4L2 mmap streaming program: VIDIOC_REQBUFS (4 buffers), VIDIOC_QUERYBUF + mmap each buffer, VIDIOC_QBUF all, VIDIOC_STREAMON, loop VIDIOC_DQBUF/process/VIDIOC_QBUF, VIDIOC_STREAMOFF.','C','I'],
+['Write a V4L2 USERPTR streaming program: allocate 4 page-aligned buffers with posix_memalign, VIDIOC_REQBUFS with V4L2_MEMORY_USERPTR, VIDIOC_QBUF with userptr field set, capture 100 frames.','C','I'],
+['Write a V4L2 program that uses select() to wait for a frame to be ready (readable fd) with a 1-second timeout before calling VIDIOC_DQBUF. Handle EAGAIN correctly.','C','I'],
+['Write a V4L2 program that sets the frame rate using VIDIOC_S_PARM with v4l2_streamparm.parm.capture.timeperframe = {1, 30} for 30fps and reads it back with VIDIOC_G_PARM.','C','B'],
+['Write a V4L2 multi-plane (V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) capture program for NV12 format: VIDIOC_REQBUFS with MPLANE type, mmap each plane separately, dequeue and print Y and UV plane addresses.','C','A'],
+['Write a V4L2 program that uses VIDIOC_S_CTRL to set brightness, contrast, and saturation controls. Query available controls first with VIDIOC_QUERYCTRL and skip unsupported ones gracefully.','C','I'],
+['Write a V4L2 program that captures 10 MJPEG frames, decodes each with libjpeg-turbo (tjDecompress2), and saves them as raw RGB PNGs using libpng.','C','I'],
+['Write a V4L2 DMABUF exporter: capture a frame into a DMABUF buffer (V4L2_MEMORY_DMABUF), export the fd with VIDIOC_EXPBUF, and import it into OpenCL via cl_khr_external_memory for GPU processing.','C','A'],
+['Write a V4L2 dual-camera capture program: open /dev/video0 and /dev/video1 simultaneously, start streaming both, and use poll() with two fds to dequeue frames from whichever camera is ready first.','C','A'],
+['Write a V4L2 subdevice control program: open the subdevice (/dev/v4l-subdev0), set the sensor format with VIDIOC_SUBDEV_S_FMT, and configure a crop rectangle with VIDIOC_SUBDEV_S_CROP.','C','A'],
+['What is V4L2 media controller? Write a program that opens /dev/media0, enumerates entities (MEDIA_IOC_ENUM_ENTITIES), links (MEDIA_IOC_ENUM_LINKS), and enables a link between sensor and ISP.','C','A'],
+['Write a V4L2 metadata capture program: open the metadata device (V4L2_BUF_TYPE_META_CAPTURE), stream sensor metadata (exposure, gain, timestamp) alongside video frames, and print the sensor timestamp.','C','A'],
+['Write a V4L2 capture pipeline with a producer thread (captures frames into a ring buffer) and a consumer thread (processes frames). Use a mutex + condition variable for synchronization.','C','I'],
+['Write a V4L2 program that reads the camera s EDID or sensor model from sysfs (/sys/class/video4linux/video0/name) and queries the driver version with VIDIOC_QUERYCAP.driver_version.','C','B'],
+['Write a V4L2 program that measures capture latency: record the kernel timestamp from v4l2_buffer.timestamp (V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC) and compare it to CLOCK_MONOTONIC to compute pipeline delay.','C','I'],
+['Write a V4L2 capture program that handles EIO errors (device disconnected): catch the EIO from VIDIOC_DQBUF, close and reopen the device, reinitialize buffers, and resume streaming.','C','I'],
+['Design a V4L2 capture system for an embedded camera that captures 4K NV12 at 30fps, exports frames as DMABUFs to a GPU pipeline, and monitors dropped frames (V4L2_BUF_FLAG_ERROR). Specify the buffer count, memory type, and error recovery strategy.','T','A']
+]},
+{id:'m02',phase:1,num:'02',icon:'🖼️',title:'Image Processing — Pixel Ops & Transforms',desc:'Convolution, filtering, morphology, histograms, color spaces, affine transforms, frequency domain.',qs:[
+['Implement a 3x3 box blur in C on a grayscale uint8 image: iterate over every pixel, compute the average of the 3x3 neighborhood, handle border pixels with clamping.','C','B'],
+['Implement a separable Gaussian blur in C: first pass blurs horizontally with a 1D kernel, second pass blurs vertically. Use a sigma=1.5 kernel computed from the Gaussian formula.','C','B'],
+['Implement a Sobel edge detector in C: apply Sx and Sy kernels, compute gradient magnitude as sqrt(Gx²+Gy²), threshold at 128 to produce a binary edge map.','C','B'],
+['Implement histogram equalization for a grayscale image in C: compute the histogram (256 bins), compute the CDF, map each pixel to its equalized value, and verify the output histogram is flat.','C','B'],
+['Implement bilinear interpolation for image scaling in C: given source and destination dimensions, compute the sub-pixel source coordinate for each dest pixel and interpolate from 4 neighbors.','C','I'],
+['Implement an affine transform in C: apply a 2x3 affine matrix (rotation + translation + scale) to an image using bilinear interpolation for sub-pixel sampling.','C','I'],
+['Implement morphological dilation and erosion in C for a binary image using a 3x3 structuring element. Use them to implement opening and closing operations.','C','I'],
+['Implement a 2D DFT in C for a small image patch (32x32): compute the complex DFT, shift zero frequency to center, compute the magnitude spectrum, and display it.','C','I'],
+['Implement a median filter in C using a partial sort (insertion sort) on the 3x3 neighborhood. Compare noise removal vs Gaussian blur on a salt-and-pepper noise image.','C','I'],
+['Implement YUV to RGB conversion in C for an NV12 frame: extract Y plane and interleaved UV plane, apply BT.601 matrix coefficients to produce RGB24 output.','C','B'],
+['Implement connected component labeling in C using union-find: two-pass algorithm marks foreground pixels with labels, merges equivalent labels, and outputs a label map.','C','I'],
+['Implement the Canny edge detector in C: Gaussian smooth, Sobel gradient, non-maximum suppression along gradient direction, double threshold with hysteresis.','C','I'],
+['Implement image pyramid construction in C: build a Gaussian pyramid (downsample by 2 with Gaussian blur each level) and a Laplacian pyramid (difference between levels), then reconstruct.','C','A'],
+['Implement Harris corner detector in C: compute Ix, Iy gradients, compute the structure tensor M, compute the Harris response R = det(M) - k*trace²(M), non-maximum suppress.','C','A'],
+['Implement CLAHE (Contrast Limited Adaptive Histogram Equalization) in C: divide the image into 8x8 tiles, equalize each tile with a clip limit, bilinearly interpolate between tile maps.','C','A'],
+['Implement template matching in C using normalized cross-correlation (NCC): slide the template over the image, compute NCC at each position, find the maximum.','C','I'],
+['Implement perspective transform (homography) in C: given 4 point correspondences, compute the 3x3 homography matrix using DLT, apply it to warp an image.','C','A'],
+['Implement JPEG compression in C using libjpeg: compress a raw RGB buffer to JPEG in memory (jpeg_mem_dest), control quality factor, and decompress back to verify round-trip.','C','I'],
+['Implement image stitching in C/C++ using OpenCV: detect SIFT keypoints in two overlapping images, match descriptors, estimate homography with RANSAC, warp and blend.','C','A'],
+['Implement a real-time image denoising pipeline in C using a bilateral filter: for each pixel, compute a weighted average of neighbors where weights account for both spatial distance and intensity difference.','C','A']
+]},
+{id:'m03',phase:1,num:'03',icon:'👁️',title:'OpenCV — Deep Dive',desc:'Mat, VideoCapture, imgproc, features2d, dnn, CUDA backend, tracking, calibration, aruco.',qs:[
+['Write an OpenCV program that opens a VideoCapture (from file and from camera index 0), reads frames in a loop, converts to grayscale with cv::cvtColor, and displays with cv::imshow.','C','B'],
+['Write an OpenCV program using cv::filter2D with a custom 5x5 sharpening kernel. Also apply cv::GaussianBlur, cv::medianBlur, and cv::bilateralFilter. Display all four results side by side.','C','B'],
+['Write an OpenCV program that detects a colored object using cv::inRange in HSV space, applies morphological open/close to clean the mask, finds contours with cv::findContours, and draws the bounding rect.','C','B'],
+['Write an OpenCV program that detects SIFT keypoints in two images, matches them with cv::BFMatcher (L2 norm, cross-check), applies Lowe ratio test, draws good matches with cv::drawMatches.','C','I'],
+['Write an OpenCV program using cv::ORB for real-time feature detection on a webcam feed: compute ORB descriptors, match against a reference frame with cv::BFMatcher (Hamming), compute homography with cv::findHomography + RANSAC, draw the warped box.','C','I'],
+['Write an OpenCV camera calibration program: capture 20 chessboard images (cv::findChessboardCorners), call cv::calibrateCamera to get the camera matrix and distortion coefficients, and undistort a frame with cv::undistort.','C','I'],
+['Write an OpenCV stereo calibration and depth estimation program: calibrate two cameras with cv::stereoCalibrate, compute rectification maps with cv::stereoRectify, compute disparity with cv::StereoBM or StereoSGBM, convert to depth map.','C','A'],
+['Write an OpenCV ArUco marker detection program: generate a DICT_4X4_50 ArUco board, detect markers in a frame with cv::aruco::detectMarkers, estimate pose with cv::aruco::estimatePoseSingleMarkers, draw axis with cv::drawFrameAxes.','C','I'],
+['Write an OpenCV optical flow program: use cv::calcOpticalFlowPyrLK (sparse, Lucas-Kanade) to track 100 Shi-Tomasi corners across frames. Also implement cv::calcOpticalFlowFarneback (dense) and visualize the flow vectors.','C','I'],
+['Write an OpenCV DNN inference program: load a YOLOv8 ONNX model with cv::dnn::readNetFromONNX, set input (cv::dnn::blobFromImage), forward pass, parse detections (confidence threshold + NMS), draw boxes.','C','I'],
+['Write an OpenCV CUDA program: upload a frame to cv::cuda::GpuMat, apply cv::cuda::GaussianBlur on GPU, run cv::cuda::CannyEdgeDetector, download the result, and measure CPU vs GPU time with cv::TickMeter.','C','I'],
+['Write an OpenCV background subtraction program: use cv::createBackgroundSubtractorMOG2 to segment moving objects in a video, apply morphological cleanup, and draw contours of detected motion blobs.','C','B'],
+['Write an OpenCV face detection and recognition pipeline: detect faces with cv::CascadeClassifier (Haar), crop and align, compute LBP histogram for each face, recognize by nearest-neighbor match.','C','I'],
+['Write an OpenCV program that reads a video file, applies a perspective warp (cv::getPerspectiveTransform + cv::warpPerspective) to correct camera angle for a top-down view, and writes the corrected video.','C','I'],
+['Write an OpenCV watershed segmentation program: apply threshold to get markers, run cv::watershed to segment touching objects, color each segment, and draw the boundaries on the original image.','C','I'],
+['Write an OpenCV document scanner: detect the document quadrilateral using contour detection + approxPolyDP, sort the four corners, apply a perspective transform, and binarize with adaptive threshold.','C','I'],
+['Write an OpenCV real-time pupil tracker: use cv::HoughCircles on a thresholded eye region to detect the iris circle, compute gaze direction from pupil offset relative to iris center.','C','A'],
+['Write an OpenCV VideoWriter program that encodes frames to an MP4 (fourcc XVID or H264), reads a source video, applies a sepia tone color transform, and writes the processed video to disk.','C','B'],
+['Write an OpenCV disparity-to-pointcloud program: convert a stereo disparity map to a 3D point cloud using cv::reprojectImageTo3D, filter by valid disparity, and save as a PLY file.','C','A'],
+['Debug an OpenCV program where cv::VideoCapture.read() returns false after 100 frames. List the 5 most likely causes (codec missing, backend issue, file corruption, threading, EOF) and show how to diagnose each.','C','I']
+]},
+{id:'m04',phase:1,num:'04',icon:'🎬',title:'FFmpeg & libav — CLI & API',desc:'ffmpeg CLI, libavcodec, libavformat, libavfilter, transcoding, HW accel, custom IO, remux.',qs:[
+['Write an FFmpeg CLI command to transcode a 4K H.265 MKV file to H.264 MP4 at 8Mbps with AAC audio at 192kbps, maintaining the original resolution.','C','B'],
+['Write an FFmpeg CLI pipeline that: extracts audio from an MP4, downmixes to mono 16kHz WAV, applies loudness normalization (loudnorm filter), and outputs a new MP4 with the processed audio.','C','B'],
+['Write an FFmpeg CLI command to create a video slideshow: 1 image per second from a directory of JPEGs, add a fade-in/fade-out between slides (xfade filter), and output MP4.','C','I'],
+['Write a libavformat/libavcodec C program that opens a media file (avformat_open_input), reads packets in a loop (av_read_frame), and prints the codec name, bitrate, and duration for each stream.','C','B'],
+['Write a libavcodec C program that decodes a video file frame by frame: avcodec_send_packet / avcodec_receive_frame, converts each AVFrame from YUV420P to RGB24 using sws_scale, and saves frame 100 as a PPM.','C','I'],
+['Write a libavformat C remuxer: open an input MKV, open an output MP4, copy all streams without re-encoding (av_interleaved_write_frame), handle DTS/PTS offset correctly.','C','I'],
+['Write a libavcodec H.264 encoder in C: create an AVCodecContext with libx264, set width/height/fps/bitrate, allocate an AVFrame, fill it with a color gradient, encode 100 frames to an output file.','C','I'],
+['Write a libavfilter C program that applies a filtergraph to a decoded video stream: create a filter graph with buffersrc and buffersink, insert a scale=640:360,vflip chain, and process frames through it.','C','A'],
+['Write an FFmpeg custom IO C program: implement an AVIOContext with a read_packet callback that reads from a memory buffer instead of a file, and open an AVFormatContext with it to demux an in-memory MP4.','C','A'],
+['Write a libavcodec audio decoder in C: open an AAC stream, decode packets with avcodec_receive_frame, convert audio samples from AV_SAMPLE_FMT_FLTP to AV_SAMPLE_FMT_S16 with swr_convert, and write a WAV file.','C','I'],
+['Write an FFmpeg CLI command using the complex filtergraph (-filter_complex) to overlay a watermark PNG at the bottom-right of a video, with 50% opacity, and encode the result.','C','I'],
+['Write a libavcodec hardware-accelerated decode program: detect VAAPI support (av_hwdevice_find_type), create an AVBufferRef for the hwdevice, set the get_format callback to return AV_PIX_FMT_VAAPI, decode frames on GPU.','C','A'],
+['Write a libavformat C program that seeks to a specific timestamp in a video file (av_seek_frame), decodes the next 10 frames after the seek point, and verifies the decoded frame PTS matches the seek target.','C','I'],
+['Write an FFmpeg CLI command that uses the drawtext filter to overlay a real-time timestamp (localtime) and frame number on each frame of a video, output to a new MP4.','C','I'],
+['Write a libavcodec multi-threaded decode program: set AVCodecContext.thread_count = 4 and thread_type = FF_THREAD_FRAME, decode a long video, and measure decode throughput (fps) vs single-threaded.','C','I'],
+['Write a C program using libavformat to create an HLS (HTTP Live Streaming) output: segment a long video into 6-second .ts chunks, write the M3U8 playlist, and test playback with ffplay.','C','A'],
+['Write a libavcodec NVENC encoder in C: select the h264_nvenc encoder, set preset=p4, rc=vbr, bitrate=5M, encode a sequence of NV12 CUDA frames (AVFrame with hw_frames_ctx), and write to MP4.','C','A'],
+['Write a libavfilter audio loudness normalization pipeline in C: decode audio, push through the loudnorm filter (EBU R128, target=-23 LUFS), re-encode to AAC, and measure the input and output integrated loudness.','C','A'],
+['Write an FFmpeg CLI command to produce a video quality report: compute VMAF, PSNR, and SSIM between a reference and compressed video using the libvmaf filter and log results to JSON.','C','I'],
+['Design a real-time FFmpeg transcoding pipeline in C for a live streaming server: receive RTMP input, transcode to three HLS renditions (1080p/720p/480p) simultaneously, segment with shared keyframes, and measure end-to-end latency.','T','A']
+]},
+{id:'m05',phase:1,num:'05',icon:'🔗',title:'GStreamer — Pipelines & Elements',desc:'gst-launch, appsrc/appsink, pads, caps negotiation, bus, signals, plugin writing basics, Python bindings.',qs:[
+['Write a gst-launch-1.0 pipeline that captures from v4l2src (/dev/video0), converts to NV12, encodes with x264enc, muxes into Matroska, and writes to disk.','C','B'],
+['Write a gst-launch-1.0 pipeline that plays a local MP4 file with playbin and applies a videobalance element (contrast=1.5, brightness=0.1) via the video-filter property.','C','B'],
+['Write a GStreamer C program that builds a pipeline: v4l2src -> videoconvert -> autovideosink. Use gst_parse_launch, set to PLAYING, run a GMainLoop, and handle EOS and ERROR messages on the bus.','C','B'],
+['Write a GStreamer C program that uses appsrc to push custom video frames (generated from a timer callback) into a pipeline: appsrc -> videoconvert -> x264enc -> mp4mux -> filesink.','C','I'],
+['Write a GStreamer C program that uses appsink to pull decoded video frames from a pipeline (filesrc -> decodebin -> appsink), process each frame in the callback (compute average brightness), and print the result.','C','I'],
+['Write a GStreamer C program that dynamically links a decodebin pad to a videoconvert + autovideosink chain using the pad-added signal. Handle both video and audio pads separately.','C','I'],
+['Write a GStreamer C program that probes a pad with gst_pad_add_probe(GST_PAD_PROBE_TYPE_BUFFER) to intercept buffers, modify the green channel of each YUV frame in-place, and pass the buffer downstream.','C','A'],
+['Write a GStreamer Python (gi.repository.Gst) program that: builds a pipeline with Gst.parse_launch, subscribes to the bus for EOS/ERROR, receives frames via appsink, converts to numpy array, and runs cv2 inference.','C','I'],
+['Write a GStreamer RTSP client pipeline in gst-launch that receives an RTSP stream (rtspsrc), decodes H.264 with avdec_h264, displays with autovideosink, and prints pipeline latency.','C','B'],
+['Write a GStreamer C program with two pipelines sharing a tee: split a v4l2src into two branches — one for display (autovideosink) and one for encoding and writing to disk (x264enc -> mp4mux -> filesink).','C','I'],
+['Write a GStreamer caps negotiation example in C: place a capsfilter after v4l2src to force video/x-raw,format=NV12,width=1280,height=720,framerate=30/1, and verify negotiation succeeds with gst-launch -v.','C','I'],
+['Write a GStreamer seek program in C: build a pipeline with filesrc -> decodebin -> autovideosink, handle the ASYNC_DONE bus message, then seek to 30s with gst_element_seek_simple(GST_FORMAT_TIME).','C','I'],
+['Write a GStreamer custom element in C (GObject boilerplate): a simple video inverter that inherits from GstVideoFilter, overrides transform_frame_ip, and inverts all pixel values.','C','A'],
+['Write a GStreamer transcoding pipeline in C: filesrc -> qtdemux -> h264parse -> avdec_h264 -> videoconvert -> x264enc (bitrate=2000) -> mp4mux -> filesink. Handle streams of unknown codec gracefully.','C','I'],
+['Write a GStreamer pipeline with queue elements and a multiqueue to decouple producer and consumer threads: v4l2src -> queue (max-size-buffers=10) -> videoconvert -> queue -> x264enc -> filesink.','C','I'],
+['Write a GStreamer C program that reads a live MPEG-TS stream from UDP (udpsrc) with rtp, depays RTP, decodes H.264, and measures jitter using the clock time vs RTP timestamp.','C','A'],
+['Write a GStreamer Python pipeline that runs YOLOv8 inference on each frame using appsink/appsrc: pull frame, run cv2 DNN inference, draw bounding boxes, push back into the pipeline for display.','C','A'],
+['Write a GStreamer C program that uses the GstDiscoverer API to probe a media file: print all stream information (codec, resolution, sample rate, bitrate) without building a full pipeline.','C','I'],
+['Write a GStreamer pipeline that streams video from a file to multiple RTSP clients using gst-rtsp-server: create an RTSPMediaFactory, attach the pipeline, and test with two simultaneous vlc clients.','C','A'],
+['Debug a GStreamer pipeline that drops frames when the encoder falls behind: identify the queue overflow using GST_DEBUG=queue:5, increase queue size, add a videorate element to drop duplicates, and measure the improvement.','C','I']
+]},
+{id:'m06',phase:1,num:'06',icon:'🎨',title:'Color Science & Pixel Formats',desc:'YUV/RGB, pixel formats (NV12, I420, YUYV), color spaces (BT.601/709/2020), HDR, ICC profiles, gamut.',qs:[
+['What is YCbCr? Explain the BT.601 coefficients for converting RGB to Y, Cb, Cr and implement the forward and inverse conversion in C for a single pixel.','C','B'],
+['What is the difference between BT.601, BT.709, and BT.2020? How do the luma coefficients (Kr, Kb) differ and when do you use each? Write the 3x3 matrix for each.','T','B'],
+['What is limited range vs full range YCbCr? How does Y in [16,235] and Cb/Cr in [16,240] differ from full range [0,255]? Write the C conversion between limited and full range.','C','B'],
+['What is the NV12 pixel format? Draw the memory layout for a 4x4 NV12 image: Y plane (4x4 bytes) followed by interleaved UV plane (2x4 bytes). Write a C function to read the Y and UV values for pixel (2,2).','C','B'],
+['What is I420 (YUV420P)? How do NV12 and I420 differ in UV plane layout? Write a C function to convert NV12 to I420 for a 1280x720 frame.','C','B'],
+['What is YUYV (YUY2) packed format? How is it laid out for a 4-pixel row: [Y0 U0 Y1 V0 Y2 U2 Y3 V2]? Write a C function to convert a YUYV row to RGB24.','C','B'],
+['What is chroma subsampling? Explain 4:4:4, 4:2:2, and 4:2:0 in terms of luma/chroma sample counts. How does 4:2:0 save bandwidth and what aliasing does it introduce?','T','B'],
+['Write a C program that converts an RGB image to HSV, applies hue rotation (hue += 60°), and converts back to RGB. Use OpenCV for verification.','C','B'],
+['What is a color gamut? How does DCI-P3 differ from sRGB and BT.2020 in terms of the CIE chromaticity diagram? Write the 3x3 matrix to convert DCI-P3 primaries to XYZ.','T','I'],
+['What is HDR (High Dynamic Range)? Explain the difference between HDR10 (PQ EOTF, BT.2020, 10-bit), HLG (Hybrid Log-Gamma), and Dolby Vision in terms of metadata and EOTF.','T','I'],
+['Write a C function implementing the PQ (Perceptual Quantizer / SMPTE ST 2084) EOTF: given a code value in [0,1], compute the absolute luminance in nits.','C','I'],
+['Write a C function that applies an ICC profile color transform: load an ICC profile with Little CMS (lcms2), create a transform from sRGB to DCI-P3, and apply it to an RGB image buffer.','C','A'],
+['What is tone mapping? Implement the Reinhard tone mapping operator in C: L_mapped = L / (1 + L), then apply to an HDR float32 image and output SDR uint8.','C','I'],
+['Write a C program that reads an EXR file (using OpenEXR or TinyEXR), extracts the float32 RGB channels, applies ACES tone mapping (simplified matrix + RRT + ODT), and saves as PNG.','C','A'],
+['What is white balance? Write a C program that computes the gray world white balance correction: average R, G, B channels, scale each channel so all averages equal the gray mean.','C','I'],
+['Write a C color correction pipeline: apply a 3x3 color correction matrix (CCM) to an RGB image, clamp to [0,255], and measure the delta-E error vs a target color patch using CIELAB distance.','C','I'],
+['What is the sRGB gamma curve? Implement the sRGB OETF (linear to sRGB) and EOTF (sRGB to linear) in C. Why is exact gamma correction important for image processing accuracy?','C','B'],
+['Write a Python program using Pillow and colour-science to analyze an image: compute the average CIE Lab color, plot the gamut coverage on a CIE xy chromaticity diagram.','C','I'],
+['Write a C program that detects if a frame is HDR or SDR by analyzing the PQ luminance histogram: if more than 1% of pixels exceed 100 nits, classify as HDR.','C','I'],
+['Design a color pipeline for a camera ISP (Image Signal Processor): from raw Bayer sensor data to display-ready sRGB output. Specify: demosaicing, white balance, noise reduction, CCM, gamma, and tonemapping stages.','T','A']
+]},
+{id:'m07',phase:1,num:'07',icon:'📐',title:'Camera Calibration & Geometry',desc:'Pinhole model, distortion, calibration patterns, stereo geometry, pose estimation, homography, SfM.',qs:[
+['What is the pinhole camera model? Write the camera projection equation that maps a 3D world point (X, Y, Z) to a 2D image point (u, v) using the intrinsic matrix K = [fx, 0, cx; 0, fy, cy; 0, 0, 1].','T','B'],
+['What are radial and tangential distortion? Write the distortion equations: x_d = x(1 + k1*r² + k2*r⁴) + 2*p1*xy + p2*(r²+2x²). When does tangential distortion matter?','T','B'],
+['Write an OpenCV camera calibration program: detect cv::findChessboardCorners in 20 images, refine with cv::cornerSubPix, run cv::calibrateCamera, and print the reprojection error and distortion coefficients.','C','I'],
+['Write an OpenCV program to undistort a camera stream in real time: precompute cv::initUndistortRectifyMap once, and apply cv::remap to each frame. Measure throughput vs cv::undistort per frame.','C','I'],
+['Write a pose estimation program using cv::solvePnP: given 3D object points (a known calibration target) and their 2D projections, compute the rotation and translation vectors, and draw the 3D axes on the image.','C','I'],
+['Write a stereo calibration program: calibrate two cameras separately, then call cv::stereoCalibrate to compute the relative R and T, and cv::stereoRectify to compute the rectification homographies.','C','A'],
+['Write a stereo depth estimation pipeline: apply rectification maps (cv::remap), compute disparity with cv::StereoSGBM, convert to depth with Z = f*baseline/disparity, and measure accuracy at a known distance.','C','A'],
+['What is a homography? Write a C++ program to compute a homography from 4 point correspondences (cv::findHomography), apply it to warp a planar image, and overlay it on a scene.','C','I'],
+['Write an OpenCV ArUco-based pose tracker: detect ArUco markers in every frame, estimate pose with cv::aruco::estimatePoseSingleMarkers, compute the marker s world position from the camera transform, and track over time.','C','I'],
+['What is structure from motion (SfM)? Outline the pipeline: feature extraction (SIFT), two-view geometry (essential matrix, cv::findEssentialMat), triangulation (cv::triangulatePoints), bundle adjustment (g2o/ceres).','T','A'],
+['Write an OpenCV program to estimate the fundamental matrix between two views: detect and match SIFT features, compute F with cv::findFundamentalMat (RANSAC), and draw epipolar lines on both images.','C','I'],
+['Write a C program that implements the Direct Linear Transform (DLT) algorithm to compute a homography from 4 point pairs: build the 8x9 A matrix, solve with SVD, extract and normalize the 3x3 H.','C','A'],
+['Write a camera-to-world transform program: given camera intrinsics (K), extrinsics (R, t), and a 2D image point, back-project it to a 3D ray, intersect the ray with a ground plane (z=0), and return the world coordinate.','C','I'],
+['Write a lens distortion correction pipeline for a fisheye camera: use the fisheye camera model (cv::fisheye::calibrate), undistort with cv::fisheye::initUndistortRectifyMap, and equirect-project to a flat panorama.','C','A'],
+['What is the difference between cv::SolvePnP methods: ITERATIVE, EPNP, and SQPNP? When does each converge, and how do you handle degenerate configurations (coplanar points)?','T','I'],
+['Write a planar homography tracker for augmented reality: detect a planar target with ORB features, compute homography, overlay a 3D cube on the target surface, and handle occlusion with RANSAC filtering.','C','A'],
+['Write a program that computes the essential matrix from two calibrated camera views, decomposes it into R and T (cv::decomposeEssentialMat), selects the correct R/T by chirality check, and triangulates 50 points.','C','A'],
+['What is bundle adjustment? Write a simple 2D bundle adjustment using the Ceres solver: optimize camera poses and 3D point positions to minimize reprojection error over 5 cameras and 50 points.','C','A'],
+['Write a camera extrinsic calibration program for a robot arm: use a checkerboard attached to the end-effector, capture images at multiple arm poses, solve the hand-eye calibration with cv::calibrateHandEye (AX=XB).','C','A'],
+['Design a multi-camera calibration rig for a surround-view (6 cameras, 60° overlap) system: specify the calibration target, intrinsic calibration procedure, extrinsic calibration with a common target, and online recalibration with IMU fusion.','T','A']
+]},
+{id:'m08',phase:1,num:'08',icon:'🔊',title:'Audio Fundamentals & ALSA',desc:'PCM, sampling theory, ALSA API (snd_pcm), capture/playback, mixer, JACK, PortAudio, audio pipeline.',qs:[
+['What is PCM audio? Explain: sampling rate (44.1kHz, 48kHz, 192kHz), bit depth (16-bit, 24-bit, 32-bit float), channels (mono, stereo, 5.1), and compute the data rate for 48kHz/24-bit/stereo.','T','B'],
+['What is the Nyquist theorem? If we sample at 48kHz, what is the highest representable frequency? Why is an anti-aliasing filter required before the ADC?','T','B'],
+['Write an ALSA C program to open a PCM capture device (snd_pcm_open, SND_PCM_STREAM_CAPTURE), set hw params (44100Hz, S16_LE, 2ch, 1024 frame period), and read 5 seconds of audio to a file.','C','B'],
+['Write an ALSA C program to play back a WAV file: open the PCM playback device, set hw params to match the WAV header, read PCM frames from the file, and write them with snd_pcm_writei in a loop.','C','B'],
+['Write an ALSA C program that handles underruns: catch -EPIPE from snd_pcm_writei, call snd_pcm_recover, log the underrun count, and resume playback without dropping the stream.','C','I'],
+['Write an ALSA C program that queries all available sound cards and devices: iterate snd_card_next, snd_ctl_open, snd_ctl_pcm_next_device, and print card name, device number, and description.','C','B'],
+['Write an ALSA mixer control program: open the mixer (snd_mixer_open), load the default card, find the Master element (snd_mixer_selem_id_set_name), get/set the volume as a percentage.','C','I'],
+['Write a low-latency ALSA audio pass-through program: open both capture and playback PCMs, link them with snd_pcm_link, set period size to 64 frames at 48kHz, measure roundtrip latency with CLOCK_MONOTONIC.','C','A'],
+['Write a PortAudio C program that: Pa_Initialize, open a stream (input+output, 44100Hz, float32), implement a Pa_StreamCallback that passes audio through with a volume scaling, Pa_StartStream, sleep 5s, Pa_StopStream.','C','I'],
+['Write a JACK C audio client: register input and output ports, implement a process callback that reads from the input port and writes silence + a 440Hz sine tone to the output port.','C','I'],
+['Write an ALSA C program that performs level metering: capture audio in chunks of 1024 frames, compute RMS level (sqrt of mean of squares) and peak level, display a simple ASCII level meter.','C','I'],
+['Write a C program using libsndfile to read a FLAC or WAV file, normalize the audio (scale so peak is 0dBFS), and write the result to a new WAV file.','C','B'],
+['What is audio latency? Explain the sources: ADC latency, kernel ring buffer, software processing, DAC latency. How do period_size and buffer_size in ALSA control the trade-off between latency and stability?','T','I'],
+['Write an ALSA C program that generates a dual-tone (440Hz + 880Hz) sine wave and plays it back, using snd_pcm_mmap_begin/commit for zero-copy access to the DMA buffer.','C','A'],
+['Write a C program that implements a simple audio echo effect using a ring buffer: delay of 0.5 seconds, feedback of 0.4. Process blocks of 512 samples at 44100Hz.','C','I'],
+['Write a C program that opens an ALSA capture device in non-blocking mode (SND_PCM_NONBLOCK), uses poll() to wait for data ready, reads frames, and computes the total capture jitter.','C','A'],
+['Write a C program that converts a stereo 44100Hz/S16_LE audio stream to mono 16kHz/S16_LE using libsamplerate (SRC_SINC_BEST_QUALITY). This is the typical preprocessing for speech recognition.','C','I'],
+['Write a Python script using sounddevice to: capture 5 seconds of audio, compute the FFT with numpy, plot the frequency spectrum, identify the dominant frequency, and play it back.','C','B'],
+['What is the ALSA sequencer API? Write a C program that opens the ALSA sequencer, creates a client port, listens for MIDI note-on events, and prints the note number and velocity.','C','A'],
+['Design an audio pipeline for an embedded voice assistant device: I2S microphone array -> ALSA capture -> beamforming DSP -> VAD -> ASR engine -> TTS -> ALSA playback. Specify latency targets, sample rates, and thread architecture.','T','A']
+]},
+{id:'m09',phase:2,num:'09',icon:'📼',title:'Video Codecs & Encoding Theory',desc:'DCT, motion estimation, H.264/H.265/AV1, I/P/B frames, GOP, rate control, entropy coding, profiles.',qs:[
+['What is intra-frame (I-frame) vs inter-frame (P-frame and B-frame) coding? How does each reduce data: spatial redundancy (DCT) vs temporal redundancy (motion compensation)?','T','B'],
+['What is the DCT (Discrete Cosine Transform) in video compression? Implement a 2D 8x8 DCT in C on a block of pixel values and show how low-frequency coefficients carry most energy.','C','I'],
+['What is a macroblock (H.264) / CTU (H.265)? What is the default size, how is it partitioned into prediction units, and how does transform unit size affect quality vs complexity?','T','B'],
+['What is motion estimation? Implement a full search block matching algorithm in C: for each 16x16 macroblock in the current frame, search a ±16 search window in the reference frame and return the best matching MV.','C','I'],
+['What is rate-distortion optimization (RDO)? How does an encoder choose between skip, merge, inter, and intra modes by minimizing D + λR (distortion + λ × rate)?','T','I'],
+['What is a GOP (Group of Pictures)? How does GOP size affect random access, compression efficiency, and encoder delay? When would you choose GOP=1 (all-intra) vs GOP=250?','T','B'],
+['What are the H.264 profiles: Baseline, Main, and High? What encoding tools (B-frames, CABAC, 8x8 DCT) does each add, and which should you use for streaming vs broadcast?','T','B'],
+['What is CABAC (Context Adaptive Binary Arithmetic Coding)? How does it use context models to adaptively predict the probability of each bit vs CAVLC (fixed VLC tables)?','T','I'],
+['What is the H.265 (HEVC) CTU structure? How do CTUs up to 64x64 pixels and recursive CU/PU/TU partitioning improve compression over H.264 macroblocks at the cost of encoder complexity?','T','I'],
+['What is AV1? How do its key tools (superblocks up to 128x128, compound prediction, loop restoration filter, film grain synthesis, CDEF) improve compression over H.265?','T','A'],
+['What is VBR vs CBR vs CRF rate control? Implement a simple token bucket rate controller in C: given target bitrate and buffer size, compute the quantizer for each frame to stay within the budget.','C','A'],
+['What is two-pass encoding? Write an FFmpeg CLI command for two-pass H.264 encoding: pass 1 (bitrate analysis, -pass 1, -an, /dev/null output), pass 2 (-pass 2, target bitrate), and compare output quality to single-pass CRF.','C','I'],
+['Write a Python script using ffprobe (subprocess) to parse the bitstream of an H.264 file: extract I/P/B frame types, compute the ratio, plot frame sizes over time, and identify scene changes.','C','I'],
+['What is the in-loop deblocking filter in H.264/H.265? How does it smooth block boundaries after reconstruction and why is it applied inside the coding loop (affects reference frames)?','T','I'],
+['What is a reference picture list? How does H.264 use List0 and List1 for P-frame and B-frame prediction, and how does long-term reference picture marking improve compression for slow-changing backgrounds?','T','A'],
+['What is entropy coding? Compare CABAC (H.264 High Profile) vs CAVLC vs VP9 boolean coder vs AV1 range coder in terms of compression efficiency and decode complexity.','T','I'],
+['What is scalable video coding (SVC)? How does H.264 SVC or AV1 scalability allow a base layer + enhancement layers to support multiple quality levels from a single bitstream?','T','A'],
+['Write a C program using libx264 directly: encode 100 frames of a moving checkerboard pattern, extract the NAL units, print I/P/B frame sizes, and verify the output with ffprobe.','C','A'],
+['What is film grain synthesis in AV1? How does encoding the grain parameters instead of the grain itself improve compression for noisy content?','T','A'],
+['Design a video codec selection guide for a video streaming platform: given four use cases (live sports broadcast, VOD library, video conferencing, surveillance archive), specify the codec, profile, GOP, rate control, and target bitrate for each.','T','A']
+]},
+{id:'m10',phase:2,num:'10',icon:'⚡',title:'Hardware Video Encode & Decode',desc:'VAAPI, NVDEC/NVENC, V4L2 M2M, MediaCodec, VideoToolbox, Intel QSV, libmfx, zero-copy pipeline.',qs:[
+['What is VAAPI? How does it provide hardware video acceleration on Linux for Intel/AMD/NVIDIA GPUs? Write an FFmpeg command to decode a 4K H.265 file using VAAPI and measure CPU usage vs software decode.','C','B'],
+['Write a VAAPI H.264 decode program in C: vaInitialize, vaCreateConfig (VAProfileH264High, VAEntrypointVLD), vaCreateContext, vaCreateSurfaces, vaCreateBuffer (VASliceDataBuffer + VASliceParameterBuffer), vaRenderPicture, vaSyncSurface.','C','A'],
+['Write a VAAPI H.264 encode program in C: create an encode context (VAEntrypointEncSlice), create a VAEncPictureParameterBufferH264 and VAEncSequenceParameterBufferH264, encode a sequence of NV12 surfaces to an H.264 bitstream.','C','A'],
+['What is NVDEC? Write an FFmpeg command to decode a 4K H.265 file using CUDA/NVDEC (-hwaccel cuda -hwaccel_output_format cuda) and pipe the frames to a CUDA processing kernel without CPU copy.','C','I'],
+['Write a NVENC C program using the Video Codec SDK: NvEncoderCuda::Initialize, create input buffers (NV12), fill with gradient, NvEncoder::EncodeFrame, write the bitstream to a file. Measure encode throughput in fps.','C','A'],
+['Write a V4L2 M2M H.264 decode program in C: open /dev/video-dec0, set input format V4L2_PIX_FMT_H264, set output format V4L2_PIX_FMT_NV12, queue H.264 NAL units on OUTPUT queue, dequeue NV12 frames on CAPTURE queue.','C','A'],
+['What is Intel Quick Sync Video (QSV) via libmfx/oneVPL? Write an FFmpeg command to transcode a 1080p H.264 file to H.265 using QSV (h264_qsv -> hevc_qsv) and compare speed and quality to software.','C','I'],
+['What is VideoToolbox on macOS/iOS? Write a Swift or ObjC program that creates a VTCompressionSession for H.264 hardware encode: set bitrate, framerate, profile, and compress a CVPixelBuffer.','C','A'],
+['Write a zero-copy HW decode pipeline in C using FFmpeg API: decode with VAAPI to a hw_frame, run a VAAPI post-processing filter (scale_vaapi) to resize, encode with VAAPI (h264_vaapi) — all without data touching the CPU.','C','A'],
+['Write a libav + CUDA zero-copy pipeline: decode with NVDEC to CUDA frames (av_hwframe_ctx), run a custom CUDA kernel on each frame (apply a color filter), encode with NVENC from the same CUDA frame.','C','A'],
+['What is GStreamer vaapidecode? Write a GStreamer pipeline that decodes a file with vaapidecode, scales with vaapipostproc, encodes to H.265 with vaapih265enc, and measures the GPU utilization with intel_gpu_top.','C','I'],
+['Write an Android MediaCodec Java program: configure MediaCodec for H.264 decode, queue input ByteBuffers with H.264 NAL units, dequeue output buffers, render to a SurfaceView.','C','A'],
+['What is V4L2 stateless codec API? How does it differ from stateful (V4L2 M2M): the driver provides only slice-level hardware, the driver must parse headers and manage DPB (decoded picture buffer) itself?','T','A'],
+['Write a benchmark comparing software vs hardware H.264 decode on a Raspberry Pi 4: measure fps and CPU usage for libav software decode vs V4L2 M2M hardware decode of a 1080p60 stream.','C','I'],
+['Write a GStreamer pipeline with nvv4l2decoder (Jetson) for NVIDIA hardware decode: filesrc -> h264parse -> nvv4l2decoder -> nvvidconv -> autovideosink. Measure GPU decode throughput.','C','I'],
+['What is the difference between compressed and uncompressed hardware video buffers? How do drivers manage DMA-BUF allocation to avoid CPU copies between decode output and display input?','T','I'],
+['Write a hardware encode quality comparison script: encode the same 30-second 1080p clip with libx264 CRF=23, h264_nvenc CQ=23, and h264_vaapi Q=23. Compute VMAF scores and encoding time for each.','C','I'],
+['Write a C program that detects hardware decode capabilities on the current system: query VAAPI entrypoints (vaQueryConfigEntrypoints), NVDEC feature list (cuvidGetDecoderCaps), and V4L2 codec drivers (/dev/video*).','C','I'],
+['What is hardware video decode in a browser? How does the WebCodecs API (VideoDecoder) provide hardware-accelerated H.264/AV1 decode in JavaScript with zero-copy output to WebGL/WebGPU?','T','A'],
+['Design a hardware transcoding cluster for a video streaming platform: 100 streams simultaneously at 1080p60, transcode each to 4 bitrate ladders. Specify GPU type, NVENC session count, load balancing, and failure recovery.','T','A']
+]},
+{id:'m11',phase:2,num:'11',icon:'🎵',title:'Audio Processing & DSP',desc:'Convolution, FIR/IIR filters, FFT, STFT, reverb, pitch shift, noise reduction, EQ, compressor, VST.',qs:[
+['Implement a FIR low-pass filter in C: given a set of coefficients (windowed sinc, cutoff=4kHz, sr=44100Hz), apply the filter to a mono S16 audio buffer using direct convolution.','C','B'],
+['Implement a biquad IIR filter in C: implement the Direct Form II biquad with b0, b1, b2, a1, a2 coefficients. Compute the coefficients for a peaking EQ at 1kHz, +6dB, Q=1.0.','C','I'],
+['Implement a real-time FFT analyzer in C using FFTW: open an ALSA capture stream, take 1024-sample frames with 50% overlap (Hann window), compute the forward FFT, compute magnitude in dB, print a bar chart to the terminal.','C','I'],
+['Implement a short-time Fourier transform (STFT) in C using FFTW: divide audio into overlapping frames (1024 samples, 512 hop), apply a Hann window, compute FFT of each frame, store the complex spectrogram.','C','I'],
+['Implement a convolution reverb in C: convolve a mono audio signal with a room impulse response (IR) WAV file using overlap-add FFT convolution. Process in blocks of 512 samples.','C','A'],
+['Implement a pitch shifter in C using the phase vocoder: compute STFT, adjust the phase accumulator to shift pitch by ±6 semitones, inverse STFT (ISTFT) with overlap-add synthesis.','C','A'],
+['Implement a noise gate in C: compute the RMS energy in each 512-sample block, apply a gain of 1.0 if RMS > threshold, else apply gain of 0.0 with a short attack/release envelope.','C','I'],
+['Implement a dynamic range compressor in C: compute the peak level per block, apply gain reduction when level exceeds threshold, smoothed by attack and release time constants.','C','I'],
+['Implement a multi-band equalizer in C: 5-band parametric EQ using 5 cascaded biquad filters (low shelf, 3 peaking bands, high shelf). Apply to a WAV file and write the result.','C','A'],
+['Implement spectral subtraction noise reduction in C: estimate the noise floor from the first 0.5 seconds of silence, subtract the noise spectrum from each STFT frame, reconstruct with ISTFT.','C','A'],
+['Write a C program using libsamplerate to resample a 44100Hz audio file to 48000Hz using SRC_SINC_BEST_QUALITY, compare the frequency response of the output with an FFT plot.','C','I'],
+['Implement a stereo widener in C: use a mid-side (M-S) matrix to separate mid (L+R) and side (L-R), attenuate mid and amplify side, then convert back to L/R. Apply to a stereo WAV file.','C','I'],
+['Implement a beat detector in C: compute onset detection function (spectral flux: sum of positive differences between consecutive magnitude spectra), low-pass filter, peak pick at regular BPM intervals.','C','A'],
+['Implement a digital crossover in C for a 2-way speaker: Linkwitz-Riley 4th order crossover at 3kHz — low-pass for woofer, high-pass for tweeter. Apply to a stereo WAV and write separate mono output files.','C','A'],
+['Write a Python audio DSP notebook using librosa: load a WAV file, plot its waveform and spectrogram, compute and overlay the fundamental frequency (F0) using librosa.yin, and note the harmonic series.','C','I'],
+['Implement a time-domain pitch detection algorithm in C: autocorrelation-based pitch estimator (YIN algorithm) that finds the period of a voiced speech frame and converts to Hz.','C','A'],
+['Write a VST3 plugin stub in C++ using the VST3 SDK: override IAudioProcessor::process to apply a simple tremolo (amplitude modulation by a 5Hz sine) to the input audio buffer.','C','A'],
+['Implement a Dolby Atmos channel upmixer stub in C: take a stereo input and create 7.1.4 (height channels) output by applying HRTF filters to derive height channel content.','C','A'],
+['Write a real-time audio ducking program in C: monitor a sidechain input (speech), when its RMS exceeds a threshold, apply gain reduction to the music output stream using ALSA links.','C','I'],
+['Design a professional audio DSP pipeline for a broadcast playout system: stereo input -> EQ -> compressor -> limiter -> loudness normalizer (EBU R128) -> sample rate conversion -> AES67 output. Specify the signal chain, latency, and redundancy.','T','A']
+]},
+{id:'m12',phase:2,num:'12',icon:'📡',title:'Streaming Protocols & Network Media',desc:'RTP/RTCP, RTSP, HLS, DASH, WebRTC data flow, SRT, MPEG-TS, jitter buffer, packet loss concealment.',qs:[
+['What is RTP (Real-time Transport Protocol)? Describe the RTP header fields: version, marker bit, payload type, sequence number, timestamp, and SSRC. How does the sequence number detect packet loss?','T','B'],
+['What is RTCP (RTP Control Protocol)? What is a Sender Report (SR) and Receiver Report (RR)? How does the NACK mechanism request retransmission of lost RTP packets?','T','I'],
+['Write a C program that sends H.264 video over RTP: packetize H.264 NAL units into RTP packets (RFC 6184 Single NAL / FU-A fragmentation), create a UDP socket, send to a multicast group, and play with VLC.','C','A'],
+['What is RTSP (Real-Time Streaming Protocol)? Describe the DESCRIBE/SETUP/PLAY/TEARDOWN transaction sequence and how RTSP negotiates the RTP transport parameters.','T','I'],
+['Write a GStreamer RTSP server in Python: create an RTSPServer, define an RTSPMediaFactory pipeline (v4l2src -> x264enc -> rtph264pay), mount it at /live, and test with two simultaneous VLC clients.','C','I'],
+['What is HLS (HTTP Live Streaming)? Describe the M3U8 playlist structure: EXT-X-TARGETDURATION, EXT-X-MEDIA-SEQUENCE, EXTINF, and segment file references. How does the client adapt bitrate?','T','B'],
+['Write an FFmpeg command to produce an adaptive HLS stream with three quality levels: use the hls_variant_stream_map option to output three M3U8 playlists (1080p, 720p, 480p) and a master playlist.','C','I'],
+['What is MPEG-DASH (Dynamic Adaptive Streaming over HTTP)? How does the MPD manifest describe Periods, AdaptationSets, Representations, and SegmentTemplate? Compare to HLS.','T','I'],
+['What is SRT (Secure Reliable Transport)? How does it provide reliable, encrypted UDP transport with ARQ (automatic repeat request) for contribution feeds over the public internet?','T','I'],
+['Write an FFmpeg command to send and receive an SRT stream: sender: ffmpeg -re -i input.mp4 -c copy srt://0.0.0.0:9000?mode=listener; receiver: ffmpeg -i srt://host:9000 output.mp4. Test with 5% packet loss using tc netem.','C','I'],
+['What is a jitter buffer? Implement a fixed-size jitter buffer in C: maintain a sorted array of arriving RTP packets, output one packet per 20ms, and measure the peak and average jitter.','C','A'],
+['What is packet loss concealment (PLC) for audio? Implement a simple PLC in C: when a 20ms Opus frame is lost, repeat the last decoded frame with 6dB attenuation for up to 3 consecutive losses.','C','A'],
+['Write a C program that builds a complete MPEG-TS muxer: assemble PAT, PMT, and PES packets from an H.264 ES and an AAC ES, assign PCR, and write to a UDP socket for broadcast.','C','A'],
+['What is the difference between UDP and TCP for media streaming? Why is UDP preferred for live video (RTP) and what mechanisms (NACK, FEC, ARQ) compensate for the lack of reliability?','T','I'],
+['Write an FFmpeg RTMP push command for live streaming to a streaming server: capture from screen (x11grab), encode with libx264 (low latency: tune=zerolatency, keyint=60), and push to rtmp://server/live/stream.','C','I'],
+['What is QUIC/WebTransport? How does QUIC s stream multiplexing without HOL blocking improve media delivery vs TCP-based HLS, and what CDN support exists for QUIC delivery?','T','A'],
+['Write a Python script using the scapy library to capture RTP packets on a network interface, parse the RTP header, reconstruct the packet sequence, and report the packet loss rate.','C','A'],
+['What is multicast? Write a C program that joins an IP multicast group (IP_ADD_MEMBERSHIP), receives MPEG-TS UDP packets, parses the PAT/PMT to find the video PID, and counts video PES packets.','C','A'],
+['What is Forward Error Correction (FEC) for video streaming? How does SMPTE 2022-1 (1D + 2D FEC over RTP) allow recovery of lost packets without retransmission?','T','A'],
+['Design a low-latency live streaming system for a sports event: camera -> encoder -> ingest -> CDN -> player. Specify the ingest protocol (SRT vs RTMP), packaging format (CMAF low-latency HLS vs LL-DASH), CDN distribution, and target glass-to-glass latency.','T','A']
+]},
+{id:'m13',phase:2,num:'13',icon:'🔈',title:'PipeWire & Modern Linux Audio',desc:'PipeWire architecture, pw-cli, ALSA/JACK/PulseAudio compatibility, graph API, session manager, SPA.',qs:[
+['What is PipeWire? How does it replace both PulseAudio (consumer audio) and JACK (professional audio) while maintaining backward compatibility through pw-pulse and pw-jack adapters?','T','B'],
+['Write a PipeWire C program using the Simple Plugin API (SPA): open a node (spa_node_set_param), connect it to the PipeWire graph, and capture audio using the spa_io_position callback.','C','A'],
+['Write a PipeWire C program using the high-level pipewire API: pw_init, pw_main_loop_new, pw_stream_new, connect the stream as an audio capture consumer, and print the audio level in the process callback.','C','I'],
+['What is WirePlumber? How does it implement the PipeWire session manager role: device management, policy decisions (which app gets which device), and Lua scripting for custom routing rules?','T','I'],
+['Write a pw-cli script that: lists all nodes (pw-cli ls Node), finds the alsa_output node, and links a specific application sink to a specific monitor output using pw-cli create-link.','C','I'],
+['Write a PipeWire audio playback C program: create a pw_stream with PW_DIRECTION_OUTPUT, connect it as an audio output, fill PCM buffers with a 440Hz sine wave in the on_process callback.','C','I'],
+['What is the PipeWire graph? How do nodes, ports, and links form a directed graph, and how does the graph scheduler compute the processing order and synchronize nodes at the quantum boundary?','T','I'],
+['Write a Python script using the dbus PipeWire interface (via pulsectl or pipewire dbus) to: list all audio sinks, get the current default sink, and change the default sink to a specific device.','C','I'],
+['What is the difference between PipeWire quantum and sample rate? How do quantum sizes of 64, 128, 512 frames affect latency, and how does PipeWire negotiate the quantum with all connected clients?','T','I'],
+['Write a PipeWire JACK-compatible C program: use JACK API (jack_client_open, jack_port_register, jack_set_process_callback), process audio with PipeWire s JACK backend transparently.','C','I'],
+['Write a PipeWire filter-chain configuration file: define a simple DSP graph with a noise gate -> EQ -> compressor chain applied to all microphone inputs using the filter-chain module.','C','A'],
+['What is SPA (Simple Plugin API)? How does PipeWire use SPA plugins for audio/video format negotiation, buffer allocation, and device access (ALSA, V4L2, Bluetooth)?','T','A'],
+['Write a pactl script (PulseAudio compatibility layer over PipeWire): create a virtual null sink, redirect all application audio to it, and monitor its level with pactl subscribe.','C','I'],
+['What is Bluetooth audio in PipeWire? How does PipeWire handle A2DP, HFP, and HFP-AG profiles, and what is the role of BlueZ as the backend?','T','I'],
+['Write a PipeWire node monitor in C: use pw_registry_add_listener to receive node added/removed events, log all audio nodes (type=PipeWire:Interface:Node, media.class=Audio/*) with their name, rate, and channels.','C','I'],
+['What is the PipeWire professional audio latency? How does PipeWire achieve JACK-class 64-frame / 48kHz (~1.3ms) latency, and what kernel configuration (PREEMPT_RT, threadirqs) is required?','T','A'],
+['Write a PipeWire IPC example: create a custom pw_proxy for a remote PipeWire object, send a method call, and receive the reply asynchronously using pw_core_sync.','C','A'],
+['What is PipeWire video support? How does PipeWire extend its graph to handle video streams (camera, screen capture, portal), and how does xdg-desktop-portal use PipeWire for screen sharing in Wayland?','T','I'],
+['Write a screen capture program using PipeWire and xdg-desktop-portal: request a screen capture session via D-Bus, receive the PipeWire stream node ID, open the PipeWire stream, and save frames to PNG.','C','A'],
+['Design a PipeWire audio routing architecture for a professional recording studio: 16 mic inputs, 32 channels of DAW processing, 8 monitor outputs, low-latency headphone mix. Specify the node graph, quantum size, and WirePlumber policy rules.','T','A']
+]},
+{id:'m14',phase:2,num:'14',icon:'🖥️',title:'Display & Compositing on Linux',desc:'DRM/KMS, Wayland compositor, framebuffers, overlays, HDR display pipeline, hardware cursor, tearing.',qs:[
+['What is DRM/KMS? Describe the object hierarchy: CRTC, connector, encoder, plane, and framebuffer. How does the modesetting flow work for a basic 1080p display setup?','T','B'],
+['Write a libdrm program that: opens /dev/dri/card0, finds the first connected connector, finds its preferred mode (1920x1080), allocates a dumb buffer, mmaps it, draws a gradient, and calls drmModeSetCrtc.','C','I'],
+['Write a DRM atomic modesetting program: use drmModeAtomicAlloc, drmModeAtomicAddProperty for CRTC_ID, ACTIVE, MODE_ID, FB_ID, and drmModeAtomicCommit with DRM_MODE_ATOMIC_ALLOW_MODESET.','C','A'],
+['What is a DRM hardware overlay plane? Write a program that creates a second dumb buffer, creates a framebuffer for it, and uses a DRM plane to overlay it at a specific position on the CRTC with alpha blending.','C','A'],
+['What is GBM (Generic Buffer Management)? Write a GBM + EGL + OpenGL ES program: create a gbm_device and gbm_surface, create an EGL context from the GBM display, render a spinning triangle, and call eglSwapBuffers to flip.','C','A'],
+['What is a Wayland compositor? Describe the objects in the Wayland protocol: wl_display, wl_registry, wl_compositor, wl_surface, wl_buffer, wl_shell_surface. How does a client get a surface on screen?','T','I'],
+['Write a Wayland client in C using the wayland-client library: connect to the display, bind wl_compositor and xdg_wm_base, create a wl_surface and xdg_toplevel, attach a wl_shm buffer with a solid color, commit, and run the event loop.','C','A'],
+['What is a Wayland compositor implemented with wlroots? How do libweston and wlroots provide a framework for building compositors, handling input, and rendering with DRM/KMS?','T','A'],
+['Write a Weston plugin (libweston compositor module) that draws a custom overlay (FPS counter) on top of all surfaces using the weston_layer and weston_view API.','C','A'],
+['What is direct scanout? How does a Wayland compositor bypass the compositor entirely and present a surface directly to a DRM plane (atomic commit without compositing) for maximum performance?','T','A'],
+['Write a DRM page flip program: set up double buffering (two dumb buffers), render alternating colors to each, flip with drmModePageFlip + DRM_MODE_PAGE_FLIP_EVENT, and wait for the vblank event with drmHandleEvent.','C','I'],
+['What is hardware cursor in DRM/KMS? Write a program that creates a 64x64 ARGB cursor buffer, uploads it with drmModeSetCursor2, and moves it with drmModeMoveCursor in response to input events.','C','I'],
+['What is a DRM format modifier (DRM_FORMAT_MOD_VENDOR)? How does it specify GPU-specific tiling (Intel Y-tiling, ARM AFBC) that allows GPU-rendered buffers to be directly scanned out by the display controller?','T','A'],
+['Write a multi-display DRM program: enumerate all connectors, configure two monitors with different CRTCs and modes (1920x1080 + 2560x1440), allocate framebuffers for each, and set both CRTCs.','C','A'],
+['What is HDR display output via DRM? Write a program that sends HDR metadata (DRM_BLOB_TYPE + color_space property) to the connector for an HDR10 display and sets the EOTF to PQ.','C','A'],
+['Write a VSync measurement program: record the timestamp of each DRM page flip event using CLOCK_MONOTONIC, compute the inter-frame interval, and detect frames that deviate by more than 2ms from 16.67ms.','C','I'],
+['What is KMS leasing? How does VK_KHR_display or DRM lease allow a VR application to take exclusive control of a display without going through the compositor?','T','A'],
+['Write a Wayland screen recorder: use xdg-desktop-portal to capture the screen, receive frames via PipeWire, encode with libavcodec (H.264), and write to an MP4 file.','C','A'],
+['What is the difference between Xwayland and native Wayland? How does Xwayland run X11 applications under a Wayland compositor, and what performance overhead does it add for games?','T','I'],
+['Design the display pipeline for a multi-zone digital signage system: 4 zones on 2 monitors, each zone renders independent content (video, graphics), composited by a Wayland compositor using DRM hardware overlay planes. Specify the buffer sharing mechanism, rendering approach, and VSync strategy.','T','A']
+]},
+{id:'m15',phase:3,num:'15',icon:'🤖',title:'AI Vision Pipelines — Detection & Tracking',desc:'YOLO inference, TensorRT, DeepSORT, ByteTrack, segmentation, pose estimation, edge inference.',qs:[
+['Write a Python YOLOv8 inference program using ultralytics: load yolov8n.pt, run inference on a webcam frame, draw bounding boxes with class labels and confidence, and measure FPS.','C','B'],
+['Write a C++ TensorRT inference program: load a YOLOv8 ONNX model with nvinfer1::IBuilder, enable FP16 precision, build the engine, create an IExecutionContext, run inference on a CUDA float32 input tensor.','C','A'],
+['Write a Python OpenCV DNN object detection program: load a YOLOv5 ONNX model with cv2.dnn.readNetFromONNX, set CUDA backend, run forward pass, parse detections with NMS (cv2.dnn.NMSBoxes), draw results.','C','I'],
+['Write a DeepSORT multi-object tracker in Python: integrate with YOLOv8 detections, maintain track IDs, compute IoU-based assignments, draw tracks with unique colors and trail lines.','C','I'],
+['Write a ByteTrack tracker integration in Python: use the ByteTrack algorithm to track objects across frames using both high-confidence and low-confidence detections. Compare tracking quality vs DeepSORT.','C','A'],
+['Write a TensorRT INT8 quantized YOLOv8 pipeline in C++: use IInt8EntropyCalibrator2 to calibrate with 500 COCO images, build the INT8 engine, measure mAP drop vs FP32, and measure latency improvement.','C','A'],
+['Write a YOLOv8 instance segmentation inference program in Python: run the segmentation model, extract per-object masks, overlay colored masks on the frame, and measure the segmentation FPS.','C','I'],
+['Write a pose estimation program using YOLOv8-pose or MediaPipe: detect 17 body keypoints, compute the elbow angle from shoulder-elbow-wrist keypoints, and trigger an alert when the angle is less than 90°.','C','I'],
+['Write a real-time face recognition pipeline in Python: detect faces with RetinaFace, compute 512-D embeddings with ArcFace (ONNX), match against a database with cosine similarity, and draw identity labels.','C','A'],
+['Write a GStreamer + DeepStream pipeline in Python using pyds (Python bindings): filesrc -> nvv4l2decoder -> nvstreammux -> nvinfer (YOLOv8 engine) -> nvtracker -> nvdsosd -> autovideosink.','C','A'],
+['Write a multi-class anomaly detection pipeline: train a PatchCore model on normal product images, compute anomaly scores for test images, threshold, and report defective regions as heatmaps.','C','A'],
+['Write an edge inference program for Raspberry Pi using TFLite: load a MobileNetV3 SSD tflite model, run inference on a camera frame, decode detection outputs, and draw boxes. Measure latency on the Pi 4.','C','I'],
+['Write a lane detection pipeline using OpenCV: apply perspective warp (bird-eye view), threshold for lane markings with adaptive threshold, fit polynomial curves to left/right lanes, compute lane center and offset.','C','I'],
+['Write a semantic segmentation inference program in Python using SegFormer (Hugging Face): load the model, run inference on a road scene image, overlay the segmentation map, and print class area percentages.','C','I'],
+['Write a real-time optical flow-based motion detection system: compute dense optical flow (Farneback), threshold the magnitude map, apply connected components to find large moving regions, annotate on the frame.','C','I'],
+['Write a multi-camera object detection system: run YOLOv8 inference on 4 cameras simultaneously using Python threading, fuse detections by camera extrinsic transform to a common world coordinate, remove duplicates.','C','A'],
+['Write a re-identification (Re-ID) pipeline: detect persons with YOLOv8, crop each detection, compute Re-ID embeddings with OSNet-AIN (ONNX), build a gallery, and match across two non-overlapping camera views.','C','A'],
+['Write a TensorRT plugin for a custom activation function (Mish: x*tanh(softplus(x))): implement IPluginV2DynamicExt, register it, and use it in a YOLOv8 engine to replace standard activations.','C','A'],
+['Write a batch inference optimization program: compare YOLOv8 latency for batch=1 vs batch=4 vs batch=8 on CUDA, and determine the optimal batch size for a 10-camera system to maximize throughput.','C','I'],
+['Design an AI vision pipeline for an automated quality control system on a manufacturing line: 3 cameras at 60fps, detect surface defects with a segmentation model, track defects across frames, log results to a database, and trigger a reject actuator. Specify the hardware (GPU, camera), pipeline latency budget, and model update strategy.','T','A']
+]},
+{id:'m16',phase:3,num:'16',icon:'🚀',title:'NVIDIA DeepStream & Jetson',desc:'DeepStream SDK, Jetson Orin, nvstreammux, nvinfer, nvtracker, pyds, TensorRT on Jetson, multi-stream.',qs:[
+['What is NVIDIA DeepStream? How does it provide a GStreamer-based framework for multi-stream video analytics with hardware-accelerated decode, inference, and tracking?','T','B'],
+['Write a DeepStream Python (pyds) program that processes a single RTSP stream: create the pipeline with rtspsrc -> nvv4l2decoder -> nvstreammux -> nvinfer -> nvdsosd -> autovideosink, add a probe to print detection metadata.','C','I'],
+['Write a DeepStream config file (config_infer_primary.txt) for a YOLOv8 TensorRT engine: specify the engine path, batch size, network resolution, class count, custom parser library, and confidence threshold.','C','I'],
+['Write a DeepStream multi-stream program in Python: process 4 RTSP streams simultaneously with nvstreammux (batch-size=4), run a single nvinfer batch inference, demux results per stream, and display in a tiled view.','C','A'],
+['Write a DeepStream pyds metadata extraction probe: add a pad probe on the sink pad of nvdsosd, iterate NvDsBatchMeta -> NvDsFrameMeta -> NvDsObjectMeta, and log object class, confidence, and bounding box to a CSV file.','C','I'],
+['Write a DeepStream secondary inference pipeline: primary nvinfer detects persons, secondary nvinfer classifies each cropped person ROI for clothing color. Implement the cropping with nvdspreprocess.','C','A'],
+['What is nvtracker in DeepStream? Write a DeepStream config and Python program that uses NvDCF tracker: configure the tracker config file (IOU, Re-ID embedding), and extract track IDs from NvDsObjectMeta.tracker_id.','C','I'],
+['Write a Jetson Orin power measurement program: use tegrastats or jtop to record GPU power, CPU power, and memory bandwidth while running a DeepStream 4-stream pipeline, and report TOPS/W efficiency.','C','I'],
+['Write a TensorRT engine build script for Jetson Orin: use trtexec to convert a YOLOv8 ONNX to a TensorRT engine with FP16, DLA (Deep Learning Accelerator) enabled, and batch size 4. Benchmark on the Jetson.','C','I'],
+['Write a DeepStream C++ custom gst-nvdspreprocess plugin: implement the NvDsPreProcessAcquirer interface to apply a custom color normalization to input frames before primary inference.','C','A'],
+['What is Jetson DLA? How does the Jetson Orin Nano have 2 DLA cores, and how do you split a YOLOv8 model so that convolution layers run on DLA and unsupported ops fall back to GPU?','T','A'],
+['Write a DeepStream analytics program: count the number of persons who cross a virtual line (using NvDsAnalytics line crossing API), and push the count to a Redis stream every second.','C','A'],
+['Write a DeepStream pipeline with message broker: configure the nvmsgbroker plugin to publish detection metadata to an MQTT topic (NvMsgBrokerConfig), and subscribe with a Python MQTT client to receive alerts.','C','A'],
+['Write a Jetson camera capture pipeline using argus (libargus): open an ISP pipeline, capture raw Bayer frames, apply ISP processing (AWB, AE, denoise), output NV12 frames to a DeepStream pipeline.','C','A'],
+['Write a multi-Jetson distributed inference system: Jetson 1 decodes and preprocesses 8 streams, serializes frames to ZeroMQ, Jetson 2 runs inference and returns results, Jetson 1 renders overlays.','C','A'],
+['Write a DeepStream face blurring pipeline: detect faces with nvinfer (RetinaFace engine), draw a blurred rectangle over each face using a custom CUDA kernel in a pad probe.','C','A'],
+['Write a Jetson NVMe performance benchmark: measure the sustained read bandwidth for loading TensorRT engine files from an NVMe SSD to GPU memory (mmap + cudaMemcpy) vs a microSD card.','C','I'],
+['Write a DeepStream pipeline with custom postprocessing: use a CUDA kernel in a pad probe to run custom NMS (non-maximum suppression) on raw network output instead of relying on the parser library.','C','A'],
+['What is DeepStream 7.0? What new features does it add: Python bindings improvements, multi-modality (audio+video), and support for Hopper GPU tensor core operations?','T','A'],
+['Design a DeepStream-based smart city traffic analytics system: 16 intersection cameras at 1080p30, detect vehicles and pedestrians, count crossings per lane per minute, detect red-light violations, store events in a time-series database. Specify the hardware (Jetson AGX Orin or rack GPU), pipeline architecture, and alert latency target.','T','A']
+]},
+{id:'m17',phase:3,num:'17',icon:'📊',title:'Image Quality & Metrics',desc:'PSNR, SSIM, VMAF, LPIPS, SNR, MOS, codec evaluation, perceptual quality, HDR metrics.',qs:[
+['What is PSNR (Peak Signal-to-Noise Ratio)? Implement it in C: compute the MSE between two images, then PSNR = 10*log10(255²/MSE). What PSNR value corresponds to visually lossless quality?','C','B'],
+['What is SSIM (Structural Similarity Index)? Implement the single-channel SSIM in Python using numpy: compute luminance, contrast, and structure similarity terms, multiply them, and average over the image.','C','I'],
+['Write a Python script that computes PSNR and SSIM for every frame of a compressed vs reference video using FFmpeg (ffmpeg -i ref -i compressed -lavfi ssim,psnr -f null -) and plots the per-frame scores.','C','I'],
+['What is VMAF (Video Multimethod Assessment Fusion)? How does it combine PSNR, SSIM, and VIF features with a regression model trained on human perception ratings? When does it disagree with PSNR?','T','I'],
+['Write a VMAF evaluation pipeline in Python: transcode a reference clip at 5 different CRF values (18, 23, 28, 33, 38), measure VMAF for each, and plot the VMAF vs bitrate curve (rate-distortion curve).','C','I'],
+['What is LPIPS (Learned Perceptual Image Patch Similarity)? How does it use deep features from a VGG network to measure perceptual similarity, and when does it outperform SSIM for generative model evaluation?','T','I'],
+['Write a Python program using the piq library to compute SSIM, LPIPS, FID, and DISTS between a set of reference and distorted images, and rank the distortions by perceptual quality.','C','I'],
+['Write an image noise analysis program in Python: compute the signal-to-noise ratio (SNR) of a flat-field image (uniform gray target), fit a noise model (Gaussian + Poisson), and plot the noise level vs ISO/gain.','C','I'],
+['What is MOS (Mean Opinion Score)? How is it measured in a subjective video quality study (ACR, DSIS methods), and how does VMAF correlate with MOS across different content types?','T','I'],
+['Write a codec comparison benchmark script in Python: encode a set of 10 clips with libx264, libx265, and libsvtav1 at matching VMAF targets, measure encoding time, bitrate, and plot the efficiency curve.','C','I'],
+['Write a blocking artifact detector in Python: compute the mean absolute difference at 8x8 DCT block boundaries (horizontal and vertical), average across the frame, and correlate with QP (quantization parameter).','C','I'],
+['Write a motion blur detector in Python: compute the variance of the Laplacian of a frame, threshold to classify as blurry (low variance) or sharp, and plot the sharpness over a video sequence.','C','B'],
+['What is HDR quality assessment? How does HDR-VDP3 measure the perceptual difference between two HDR images, accounting for the PQ EOTF and HDR display mastering luminance?','T','A'],
+['Write a Python program that computes the color accuracy of an image processing pipeline: capture a Macbeth ColorChecker image, detect the 24 patches, measure each patch s CIE Lab value, and compute delta-E vs reference values.','C','A'],
+['Write a video quality monitoring system in Python: process a live RTSP stream with FFmpeg, compute SSIM per frame against a reference, send an alert to a Slack webhook if SSIM drops below 0.90 for more than 5 consecutive frames.','C','A'],
+['What is the difference between objective and subjective video quality? Why does PSNR sometimes rank compressed videos opposite to human ratings, and when should you use VMAF vs SSIM?','T','B'],
+['Write a lens sharpness measurement program: capture an ISO 12233 test chart, compute the Slanted-Edge SFR (Spatial Frequency Response) for the horizontal and vertical edges, and plot the MTF curve.','C','A'],
+['Write an A/B quality comparison web tool in Python/Flask: serve two video clips side by side (reference vs compressed), record user preference votes, and compute a Bradley-Terry ranking.','C','A'],
+['Write a perceptual tone mapping quality evaluator: compare three tone mapping operators (Reinhard, ACES, Drago) applied to the same HDR scene, compute TMQI (Tone Mapped image Quality Index), and rank them.','C','A'],
+['Design a continuous quality monitoring system for a video streaming platform: measure VMAF for 1% of all active streams by decoding a reference and compressed segment, trigger an alert if VMAF drops below 70, and track quality trends in Prometheus/Grafana.','T','A']
+]},
+{id:'m18',phase:3,num:'18',icon:'📸',title:'Multi-Camera & Synchronized Capture',desc:'Hardware sync, genlock, PTP/IEEE 1588, multi-sensor fusion, stereo/fisheye rigs, time alignment, ISP.',qs:[
+['What is hardware camera synchronization? How does a trigger signal (GPIO or FSIN pin) synchronize the exposure start of multiple cameras to within <1 microsecond? Why does software sync fail at high frame rates?','T','B'],
+['Write a V4L2 program that configures trigger-based capture on two cameras: set V4L2_CID_EXPOSURE_AUTO=V4L2_EXPOSURE_MANUAL, V4L2_CID_TRIGGER_MODE to external trigger, and capture synchronized frames using a GPIO trigger.','C','A'],
+['What is PTP (IEEE 1588 Precision Time Protocol)? How does it synchronize distributed system clocks to sub-microsecond accuracy, and why is it used for multi-camera timestamp alignment in robotics and automotive?','T','I'],
+['Write a Python program that monitors PTP synchronization status: read /var/run/ptp4l/ptp4l.0.socket or parse pmc get CURRENT_DATA_SET output to check offset-from-master and report if sync is lost.','C','I'],
+['Write a multi-camera frame synchronizer in C: receive frames from 4 cameras each with a hardware timestamp (monotonic), maintain a sliding window, and output a synchronized tuple when frames within 1ms of each other are available.','C','A'],
+['What is genlock? How does it synchronize the vertical sync (Vsync) of multiple cameras or cameras + display to a common reference signal (black burst or tri-level sync) for broadcast production?','T','I'],
+['Write an OpenCV stereo rig capture program: capture synchronized frames from two cameras (using V4L2 hardware trigger or shared trigger GPIO), rectify with precomputed maps, compute disparity, and visualize the 3D point cloud.','C','A'],
+['Write a fisheye multi-camera surround view system in Python: capture from 4 fisheye cameras, apply radial undistortion (cv2.fisheye.undistortImage), stitch to a top-down bird-eye view with precomputed homographies.','C','A'],
+['What is an ISP (Image Signal Processor)? Describe the stages: black level correction, lens shading correction, demosaicing, white balance, CCM, noise reduction, gamma, and sharpening. Which stages run in hardware vs software?','T','I'],
+['Write a RAW image processing pipeline in Python using rawpy and OpenCV: load a RAW DNG file, demosaic with rawpy (using AAHD algorithm), apply white balance, CCM, and gamma, and compare to the camera-processed JPEG.','C','I'],
+['Write a multi-sensor time fusion program: align RGB camera frames (30fps) with LiDAR point clouds (10Hz) and IMU (200Hz) using their monotonic timestamps, and output a synchronized tuple per LiDAR scan.','C','A'],
+['Write a camera-IMU calibration program: capture a checkerboard with known motion patterns, detect corners, run Kalibr (via subprocess) to estimate the camera-IMU extrinsic transform and IMU noise parameters.','C','A'],
+['Write a rolling shutter correction algorithm in Python: given the row-by-row exposure time and an IMU angular velocity estimate, compute the row-dependent warp, and apply it to remove skew distortion from a fast-moving target.','C','A'],
+['Write a multi-camera live view server in Python: capture from 4 cameras using separate threads, encode each frame to JPEG, serve via an HTTP multipart/x-mixed-replace stream, and view in a browser.','C','I'],
+['Write a camera exposure bracketing program using V4L2: capture 5 frames at different exposure times (V4L2_CID_EXPOSURE), merge them into an HDR image using Debevec-Malik camera response function estimation and Mertens exposure fusion.','C','A'],
+['What is multi-camera calibration for autonomous driving? Describe the procedure for calibrating 6 cameras (surround view) using a common target: intrinsic calibration, extrinsic calibration with camera-to-camera overlap, and verification with reprojection error.','T','A'],
+['Write a lens calibration distortion map visualizer: compute undistortion maps for 5 different lens distortion coefficient sets, visualize the mapping grid deformation, and report the maximum distortion in pixels.','C','I'],
+['Write a time synchronization accuracy test: attach an LED to a GPIO pin, trigger it and simultaneously capture with two cameras (hardware-synced and software-polled), analyze the frame timestamps to measure synchronization error.','C','A'],
+['Write a multi-camera video pipeline with hardware JPEG decode: capture MJPEG from 4 cameras simultaneously, use libturbojpeg to decode each frame in a thread pool, stitch the 4 decoded frames into a 2x2 grid, encode to H.264, and stream over RTSP.','C','A'],
+['Design a synchronized multi-camera system for a 3D reconstruction pipeline: 8 cameras in a dome, hardware trigger for <100µs sync, PTP time-stamping, stereo calibration, real-time streaming at 30fps, and point cloud generation at 10Hz. Specify hardware, software stack, and bandwidth budget.','T','A']
+]},
+{id:'m19',phase:3,num:'19',icon:'⚡',title:'Zero-Copy & DMA-BUF Pipelines',desc:'DMA-BUF, ion allocator, V4L2 DMABUF, OpenGL/Vulkan import, CUDA external memory, NV12 zero-copy.',qs:[
+['What is a DMA-BUF? How does it represent a kernel buffer as a file descriptor that can be shared between different devices (V4L2, GPU, display) without CPU copies?','T','B'],
+['Write a V4L2 + DRM/KMS zero-copy pipeline in C: V4L2 captures NV12 into DMABUF buffers, DRM/KMS imports the same buffer fd via drmPrimeFDToHandle + drmModeAddFB2, and displays it without any CPU copy.','C','A'],
+['Write a V4L2 + OpenGL ES zero-copy pipeline in C: export V4L2 frame as DMABUF fd (VIDIOC_EXPBUF), create an EGLImage from the fd (eglCreateImageKHR with EGL_LINUX_DMA_BUF_EXT), bind to a GL texture, render.','C','A'],
+['Write a V4L2 + Vulkan zero-copy pipeline in C: capture into DMABUF, import the fd into Vulkan as a VkImage using VK_EXT_external_memory_dma_buf + VK_EXT_image_drm_format_modifier, run a compute shader, display.','C','A'],
+['Write a V4L2 + CUDA zero-copy pipeline: export V4L2 DMABUF fd, import into CUDA as external memory using cuImportExternalMemory (CUDA_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD), map to a CUDA array, run a kernel.','C','A'],
+['What is the ION allocator (Android / embedded Linux)? How does it centralize DMA-BUF allocation across devices (GPU, camera, display), and how is it accessed from userspace via /dev/ion?','T','I'],
+['Write a DMA-BUF heap allocator program (modern kernel): open /dev/dma_heap/system, call ioctl(DMA_HEAP_IOC_ALLOC) to allocate a 4MB buffer, mmap it, write a test pattern, and import it into OpenCL.','C','A'],
+['Write a zero-copy GStreamer pipeline using DMABUF: v4l2src (io-mode=dmabuf) -> glupload (drm-format) -> glcolorconvert -> glimagesink, and verify with GST_DEBUG=GST_BUFFER that no CPU copies occur.','C','A'],
+['What is EGL_EXT_image_dma_buf_import? Write code to create an EGLImage from a DMA-BUF fd with NV12 format: eglCreateImageKHR with EGL_LINUX_DMA_BUF_EXT, plane offsets and strides, and texture it.','C','A'],
+['Write a CUDA-to-OpenGL interop program: allocate a CUDA device array, register it with OpenGL as a cuda graphics resource (cudaGraphicsGLRegisterBuffer), map it, run a CUDA kernel to fill it, unmap, render.','C','A'],
+['Write a Vulkan external semaphore + fence program: export a VkSemaphore as a sync_file fd (VK_KHR_external_semaphore_fd), import it into DRM atomic commit as an explicit fence, verify correct GPU-display synchronization.','C','A'],
+['Write a benchmark comparing DMA-BUF zero-copy vs memcpy for a 4K NV12 frame pipeline: measure the latency from V4L2 dequeue to display flip for both approaches. Plot the distribution.','C','I'],
+['What is dma_fence in the Linux kernel? How does it provide a synchronization primitive that flows with the DMA-BUF, allowing GPU, display, and V4L2 to wait for each other without polling?','T','A'],
+['Write a multi-device DMA-BUF pipeline: V4L2 captures into DMABUF -> OpenCL processes (color conversion) -> OpenGL renders (overlay) -> DRM displays. Verify with strace that no mmap/copy syscalls occur.','C','A'],
+['What is the difference between V4L2_MEMORY_MMAP, V4L2_MEMORY_USERPTR, and V4L2_MEMORY_DMABUF? When is each the right choice from a zero-copy and performance perspective?','T','I'],
+['Write a DMA-BUF fd passing program: process A allocates a DMA-BUF heap buffer, passes the fd to process B via Unix domain socket (SCM_RIGHTS), process B maps and reads the data. Verify no data copy.','C','A'],
+['What is AFBC (Arm Frame Buffer Compression)? How does the Mali GPU and DRM/KMS display controller use AFBC to reduce memory bandwidth for framebuffer transfers?','T','A'],
+['Write a zero-copy video analytics pipeline on Jetson: V4L2 captures NV12 DMABUF -> import to CUDA as external memory -> CUDA kernel preprocesses (resize, normalize) -> TensorRT inference. Measure total pipeline latency.','C','A'],
+['Write a DMA-BUF capability probe: check all devices in the pipeline (V4L2 with VIDIOC_QUERY_EXT_CTRL for DMABUF, EGL with eglQueryDmaBufFormatsEXT, Vulkan with VkPhysicalDeviceExternalImageFormatInfo) and report which DRM format modifiers are compatible across all.','C','A'],
+['Design a zero-copy embedded vision pipeline for an autonomous robot: 4 cameras -> V4L2 DMABUF -> GPU inference (TensorRT) -> obstacle map -> motor controller. Specify the buffer sharing, synchronization primitives, latency budget, and fallback if DMABUF import fails.','T','A']
+]},
+{id:'m20',phase:3,num:'20',icon:'🎤',title:'Audio Codecs & Formats',desc:'Opus, AAC, MP3, FLAC, WAV, AIFF, PCM, codec selection, libopus encode/decode, quality vs bitrate.',qs:[
+['What is Opus? How does it combine SILK (speech model) and CELT (music model) to achieve excellent quality from 6kbps (narrow-band speech) to 510kbps (high-fidelity music)?','T','B'],
+['Write a libopus C encoder: create an OpusEncoder (OPUS_APPLICATION_AUDIO, 48000Hz, 2ch), set bitrate to 128kbps, encode a float32 PCM frame (960 samples), and write the bitstream to a file.','C','I'],
+['Write a libopus C decoder: create an OpusDecoder, read an Opus bitstream frame by frame, decode each packet with opus_decode_float, and write the PCM output to a WAV file.','C','I'],
+['What is AAC (Advanced Audio Coding)? How does AAC-LC differ from HE-AAC v1 (AAC-LC + SBR) and HE-AAC v2 (+ PS)? At what bitrate does each variant become competitive?','T','B'],
+['Write an FFmpeg libav C program to encode PCM audio to AAC: create AVCodecContext with AV_CODEC_ID_AAC, set sample_rate=48000, channels=2, bit_rate=192000, encode AVFrames, and write to an AAC ADTS file.','C','I'],
+['What is MP3 (MPEG-1 Layer 3)? How does it use psychoacoustic masking, Huffman coding, and bit reservoir to achieve 128kbps perceptual transparency? Why has it been superseded by AAC and Opus?','T','B'],
+['What is FLAC (Free Lossless Audio Codec)? How does it use linear predictive coding (LPC) and Rice coding to achieve lossless compression at ~60% of raw PCM size? Write an FFmpeg command to convert a WAV to FLAC and verify lossless roundtrip.','C','B'],
+['Write a C program using libFLAC to decode a FLAC file: FLAC__stream_decoder_new, set write/metadata/error callbacks, init_file, process_until_end_of_stream, and write the decoded PCM to a WAV.','C','I'],
+['Write a codec quality comparison script in Python: encode a 30-second 48kHz/stereo WAV at 64kbps using Opus, AAC-LC, HE-AAC, and MP3 (LAME). Compute the ViSQOL perceptual quality score for each.','C','I'],
+['What is DSD (Direct Stream Digital)? How does it represent audio as a 1-bit delta-sigma bitstream at 2.8MHz (DSD64) and how does it differ from PCM in terms of bandwidth vs dynamic range trade-off?','T','A'],
+['Write a Python script using pydub: load an MP3, convert to 48000Hz/16-bit PCM, apply a 3-band EQ using a biquad filter, export as Opus in an OGG container, and verify the output with soxi.','C','I'],
+['Write a WAV file reader and writer in C from scratch (no libraries): parse the RIFF/WAVE/fmt/data chunk structure, read PCM samples, apply a gain of 0.5, and write a new WAV file.','C','B'],
+['What is spatial audio? How do Ambisonics (B-format: W, X, Y, Z channels) and binaural rendering (HRTF convolution) differ, and how does Opus support Ambisonics in the OGG container?','T','A'],
+['Write a C program that compares the encoding latency of Opus vs AAC: measure the time to encode 20ms frames in a tight loop for 1000 iterations, compute mean and 99th percentile encode latency.','C','I'],
+['Write a gapless audio playback program in C using libopus and ALSA: decode consecutive Opus tracks, trim the encoder/decoder pre-skip samples to achieve gapless playback, and measure the gap duration.','C','A'],
+['What is the Opus surround sound spec (RFC 8486)? How does it extend Opus to 5.1 and 7.1 channels using channel mapping tables and coupled/uncoupled stream pairs?','T','A'],
+['Write a real-time audio codec latency measurement program: feed a click (impulse) through an Opus encode -> decode pipeline, record the input and output timestamps with CLOCK_MONOTONIC, and measure the algorithmic delay.','C','I'],
+['Write a Python program that analyzes the spectral content of AAC vs Opus at 64kbps: compute the STFT of both, compute high-frequency energy loss above 8kHz vs the reference PCM, and plot.','C','I'],
+['Write a GStreamer Opus transcoding pipeline: filesrc (MP3) -> mpegaudioparse -> avdec_mp3 -> audioconvert -> audioresample -> opusenc (bitrate=128000) -> oggmux -> filesink.','C','I'],
+['Design an audio codec selection guide for a voice communication product: specify the codec for 4 scenarios: (1) VoIP at 16kbps, (2) music streaming at 96kbps, (3) professional recording (lossless), (4) spatial audio for VR at 256kbps. Justify codec, bitrate, container, and latency.','T','A']
+]},
+{id:'m21',phase:3,num:'21',icon:'🧠',title:'ML for Audio & Vision',desc:'Speech recognition (Whisper), TTS, VAD, super-resolution, video prediction, on-device ML, ONNX Runtime.',qs:[
+['Write a Python Whisper speech recognition program: load openai/whisper-large-v3 with transformers, transcribe a 30-second WAV file with timestamps, and output an SRT subtitle file.','C','B'],
+['Write a Python VAD (Voice Activity Detection) program using Silero VAD: load the ONNX model, process audio in 30ms frames, detect speech/silence transitions, and output segment timestamps.','C','I'],
+['Write a Python TTS (Text-to-Speech) program using Coqui TTS or Kokoro: synthesize a paragraph of text to speech, save as WAV, and measure real-time factor (synthesis time / audio duration).','C','I'],
+['Write an ONNX Runtime C++ inference program: load a Whisper encoder ONNX model, create an OrtSession, run inference on a mel spectrogram input tensor, and print the encoder output shape.','C','I'],
+['Write a Python super-resolution pipeline using Real-ESRGAN: load the x4 model, upscale a 480p video frame to 1920p, measure PSNR vs a native 1920p reference, and measure inference time per frame.','C','I'],
+['Write a Python audio source separation program using Demucs: load the htdemucs model, separate a music track into vocals, drums, bass, and other stems, and save each as a separate WAV file.','C','I'],
+['Write a Python speaker diarization program using pyannote.audio: segment a multi-speaker recording by speaker, assign speaker IDs, and output a RTTM file with turn timestamps.','C','A'],
+['Write a Python video frame interpolation program using RIFE: take two consecutive video frames, predict an intermediate frame with RIFE, and compute LPIPS and SSIM vs the actual middle frame.','C','A'],
+['Write a Python on-device speech recognition pipeline for a Raspberry Pi: use Vosk with a small English model, capture audio from ALSA in 3.2kHz/16-bit mono, process in chunks, and print transcription with word-level timestamps.','C','I'],
+['Write a Python lip-sync quality detector: extract lip region from a talking-head video with MediaPipe face mesh, compute MFCC from the audio, train a simple LSTM classifier for audio-visual synchrony, and predict sync offset.','C','A'],
+['Write a Python image captioning inference program: load BLIP-2 (Salesforce/blip2-opt-2.7b) with transformers, generate captions for 10 video keyframes, and output a structured JSON with timestamp and caption.','C','I'],
+['Write a Python zero-shot audio classification program using CLAP: embed audio clips and text prompts (dog bark, car horn, rain) into a shared embedding space, and classify audio clips by cosine similarity.','C','I'],
+['Write a Python video anomaly detection system: extract per-frame features using a pretrained EfficientNet, fit a one-class SVM on normal training frames, score test frames, and flag anomalies.','C','A'],
+['Write a Python depth estimation program using Depth Anything v2: load the model, run inference on a monocular video frame, normalize the depth map, overlay as a heatmap, and compare to LiDAR ground truth.','C','I'],
+['Write a Python real-time noise suppression pipeline using RNNoise: process ALSA audio in 480-sample frames, run the RNNoise C library via ctypes, and play back the cleaned audio through ALSA.','C','I'],
+['Write a Python music generation program using MusicGen: generate 30 seconds of electronic music conditioned on a text prompt, save to WAV, and compute the Frechet Audio Distance (FAD) vs a reference set.','C','A'],
+['Write a Python emotion recognition pipeline: extract face from webcam with RetinaFace, run FER+ ONNX model to classify 7 emotions, smooth predictions over 10 frames, and display the dominant emotion.','C','I'],
+['Write a Python video scene understanding pipeline: run OWL-ViT for open-vocabulary object detection on each keyframe, run CLIP to classify scene category, and output a structured scene graph per segment.','C','A'],
+['Write an ONNX Runtime GPU inference benchmark: compare latency for Whisper-tiny, Whisper-base, and Whisper-large-v3 on CUDA (OrtCUDAProviderOptions), and determine which fits in a 50ms real-time transcription budget.','C','I'],
+['Design a multimodal AI pipeline for a content moderation system: process uploaded video clips, extract audio (Whisper for speech-to-text), visual frames (CLIP for scene classification), and faces (ArcFace for identity check), combine signals, and flag violations. Specify model selection, inference hardware, and latency budget.','T','A']
+]},
+{id:'m22',phase:3,num:'22',icon:'🔧',title:'Performance Profiling & Pipeline Optimization',desc:'Bottleneck identification, CPU profiling, GPU profiling, threading, pipeline latency, throughput tuning.',qs:[
+['Write a C pipeline profiler using CLOCK_MONOTONIC: instrument each stage of a video pipeline (capture, decode, process, encode, display) with monotonic timestamps, compute per-stage latency and jitter, and print a summary.','C','B'],
+['Write a GStreamer pipeline latency profiler: enable GST_DEBUG_DUMP_DOT_DIR, add gst_pad_add_probe probes at each major element, record buffer timestamps, and plot the per-element processing time distribution.','C','I'],
+['Write a perf-based profiler script: use perf stat -e cycles,cache-misses,instructions to profile an FFmpeg decode process, collect the report, and identify the top 3 CPU hotspots using perf report.','C','I'],
+['Write a Python pipeline throughput optimizer: profile a YOLOv8 inference pipeline with cProfile, identify bottlenecks (image decode, preprocessing, postprocessing), and parallelize the bottleneck with threading or multiprocessing.','C','I'],
+['Write a multi-threaded V4L2 + inference pipeline in C: capture thread fills a lock-free ring buffer, inference thread pulls frames, display thread renders. Use SPSC (single-producer single-consumer) ring buffer for zero-mutex hot path.','C','A'],
+['Write a CUDA pipeline profiler using NVTX: add nvtxRangePush/nvtxRangePop markers around decode, preprocess, infer, and postprocess steps. Run under Nsight Systems and analyze GPU idle gaps.','C','I'],
+['Write a CPU cache performance test for image processing: process a 1080p grayscale image with two implementations — row-major (cache-friendly) and column-major (cache-unfriendly). Use perf stat to measure L1D/LLC miss rates.','C','I'],
+['Write a pipeline parallelism optimizer: measure the compute time of each stage in a 5-stage video pipeline, solve the pipeline balancing problem (equalize stage times by adding threads), and compute the theoretical throughput improvement.','C','I'],
+['Write a GPU memory bandwidth profiler for a color conversion kernel: measure bytes read and written using Nsight Compute memory counters, compute achieved bandwidth as a percentage of peak, and identify if the kernel is bandwidth-bound.','C','I'],
+['Write a Python async pipeline using asyncio and concurrent.futures: camera capture (ThreadPoolExecutor), AI inference (ProcessPoolExecutor for GIL bypass), display (main thread), connected by asyncio.Queue with backpressure.','C','A'],
+['Write a pipeline buffer depth tuner: for a 3-stage pipeline (capture, encode, stream), measure end-to-end latency as a function of queue depth (1, 2, 4, 8 frames), and find the minimum depth that avoids starvation.','C','I'],
+['Write a real-time priority thread audio pipeline: set the capture and playback threads to SCHED_FIFO priority 80 with pthread_setschedparam, verify with chrt -p PID that the scheduler respects priority.','C','I'],
+['Write a CPU affinity optimizer for a multi-camera pipeline: pin each camera capture thread to a specific CPU core using pthread_setaffinity_np, and pin the inference thread to the cores sharing the LLC with the GPU PCIe lanes.','C','A'],
+['Write a GStreamer pipeline debug script: enable GST_DEBUG=*:4, capture the log to a file, parse it with Python to extract buffer timestamps per element, and generate a Gantt chart of pipeline activity.','C','I'],
+['Write an ALSA audio pipeline latency measurement: record a click in the loopback (output -> input), measure the round-trip latency with a correlation-based delay estimator, and compare at period sizes of 64, 128, 512 frames.','C','I'],
+['Write a Vulkan timestamp query pipeline profiler: insert timestamps before and after the V4L2 capture, GPU upload, compute kernel, and display flip. Reconstruct the full pipeline Gantt chart.','C','A'],
+['Write a Python power profiling script for an embedded pipeline: sample the GPU and CPU power via NVML and sysfs at 100Hz while running a YOLOv8 pipeline, compute energy per inference, and plot power vs throughput.','C','I'],
+['Write a GStreamer adaptive bitrate pipeline: monitor the encoder queue level with g_object_get(queue, queued-buffers), reduce x264enc bitrate by 20% when the queue is less than 3 frames, and increase when it exceeds 8.','C','A'],
+['Write a pipeline regression test: run a video processing pipeline on a reference 60-second clip, measure fps, latency, CPU%, GPU%, and RAM, and assert that no metric regresses by more than 5% vs a saved baseline.','C','I'],
+['Design a high-throughput video analytics pipeline optimization plan: starting point is 4-stream 1080p30 YOLOv8 at 60% GPU utilization, 15fps throughput. Specify 5 concrete optimizations (batch size, NVENC decode, TensorRT INT8, async pipeline, DMABUF zero-copy) and estimate the throughput gain from each.','T','A']
+]},
+{id:'m23',phase:3,num:'23',icon:'🔌',title:'GStreamer Advanced & Custom Plugins',desc:'Base plugin classes, GstVideoFilter, GstAudioFilter, GstPushSrc, negotiation, scheduling, plugin registry.',qs:[
+['What are the GStreamer base plugin classes? When do you subclass GstVideoFilter (in-place transform), GstBaseTransform (transform with possible format change), GstPushSrc (source element), or GstBaseSink?','T','I'],
+['Write a GStreamer GstVideoFilter C plugin: inherit from GstVideoFilter, override transform_frame_ip to invert all pixel values in a GstVideoFrame, register with GST_PLUGIN_DEFINE, and test with gst-launch.','C','A'],
+['Write a GStreamer GstBaseTransform C plugin that converts grayscale (VIDEO_FORMAT_GRAY8) to RGB24: override transform_caps to negotiate the format change, set_caps to store the input format, transform to write converted output.','C','A'],
+['Write a GStreamer GstPushSrc C plugin that generates synthetic video frames (color gradient animated by time): override create to allocate a GstBuffer, fill with pixel data, set buffer duration and PTS.','C','A'],
+['Write a GStreamer GstAudioFilter C plugin: inherit from GstAudioFilter, override transform_ip to apply a simple low-pass IIR filter to each sample in the GstAudioInfo format.','C','A'],
+['Write a GStreamer element with a sinkpad and two srcpads (tee-like splitter): one output passes the buffer unchanged, the other applies a grayscale conversion. Implement src pad activation and scheduling.','C','A'],
+['Write a GStreamer meta extension: define a custom GstMeta type (NvDsObjectMeta-style) that carries a bounding box and confidence score, attach it to a buffer in a transform element, and read it in a downstream probe.','C','A'],
+['Write a GStreamer Python element using GstBase.BaseTransform: implement __gst_transform__ to run a numpy-based edge detection on each video frame, and plug it into a pipeline with gst-launch.','C','A'],
+['Write a GStreamer dynamic pipeline modification: add a new branch (tee -> queue -> filesink) to a running pipeline at runtime using gst_bin_add, gst_element_sync_state_with_parent, and gst_pad_link while the pipeline is in PLAYING state.','C','A'],
+['Write a GStreamer plugin that applies a CUDA kernel to each frame: in the transform function, obtain the GstBuffer memory, import it to CUDA via CUDA device memory, run the kernel, and sync before returning.','C','A'],
+['Write a GStreamer element negotiation unit test: create a GstHarness for your transform element, push test buffers with specific caps, and assert that the output caps match the expected converted format.','C','I'],
+['Write a GStreamer caps filter chain: force a specific resolution change midway in the pipeline using a capsfilter, verify with GST_DEBUG=capsfilter:7 that negotiation succeeds, and benchmark the cost of the software scaler.','C','I'],
+['Write a GStreamer pipeline with a valve element: add a GstValve after the encoder, open and close it periodically to simulate network congestion dropping (drop=TRUE discards all buffers), and measure the effect on downstream queue level.','C','I'],
+['Write a GStreamer plugin registry inspector: use gst_registry_get(), gst_registry_get_plugin_list(), and gst_plugin_get_feature_list() to print all installed video encoder elements with their long-name, description, and rank.','C','I'],
+['Write a GStreamer aggregator element: inherit from GstAggregator to mix two audio streams: pull one buffer from each sinkpad per output buffer, sum the samples, and push the mixed output.','C','A'],
+['Write a GStreamer plugin that integrates with GLib main loop signals: emit a GObject signal when the video quality drops below a threshold (computed from frame average brightness), and connect a slot in a Python script.','C','A'],
+['Write a GStreamer event handling element: override the event virtual function to intercept EOS events, flush all buffered data (a delay line), and then forward the EOS downstream.','C','I'],
+['Write a GStreamer element with buffer pool support: create a custom GstBufferPool that allocates buffers from a DMABUF heap, propose it via the propose_allocation vmethod, and verify zero-copy through the pipeline.','C','A'],
+['Write a GStreamer source element with timestamp control: generate video frames at exactly 30fps using a CLOCK_MONOTONIC-based sleep, compute buffer PTS from the stream time, and verify sync with audiovideosink.','C','I'],
+['Design a GStreamer plugin architecture for a commercial video analytics SDK: the SDK provides a GStreamer plugin (nvinfer-style) that bundles model loading, preprocessing, inference, and postprocessing. Specify the element class hierarchy, pad templates, GstMeta for metadata, and the configuration interface.','T','A']
+]},
+{id:'m24',phase:3,num:'24',icon:'🗜️',title:'Image Formats & Compression',desc:'JPEG, PNG, TIFF, WebP, AVIF, HEIC, raw formats, HDR EXR, lossless vs lossy, container vs codec.',qs:[
+['What is JPEG compression? Describe the stages: color space conversion (RGB->YCbCr), chroma subsampling (4:2:0), 8x8 DCT, quantization, zigzag scan, and Huffman entropy coding.','T','B'],
+['Write a C program to compress an RGB image to JPEG in memory using libjpeg: jpeg_compress_struct, jpeg_mem_dest, set quality=85, call jpeg_write_scanlines, and output the byte count. Compare byte count for quality 50, 75, 90.','C','B'],
+['What is PNG compression? How does it use lossless deflate (LZ77 + Huffman) on filtered scanlines (Sub, Up, Average, Paeth)? Write a C program using libpng to save and load a 1280x720 RGBA image.','C','B'],
+['What is WebP? How does it use the VP8 (lossy) and VP8L (lossless) codecs? Write an FFmpeg command to convert a directory of JPEG images to WebP at quality 80 and compare size vs JPEG.','C','B'],
+['What is AVIF (AV1 Image File Format)? How does it use AV1 intra-frame coding for still images? Write a Python script using pillow-avif or libavif-python to encode and decode an AVIF image, and compare size vs WebP and JPEG.','C','I'],
+['What is HEIC/HEIF? How does it use H.265 intra coding for images and support multi-image sequences (burst, HDR)? Why is Apple s use of HEIC for iPhone photos controversial from an open-source perspective?','T','I'],
+['What is OpenEXR? How does it store HDR images as float16 or float32 per channel, support multiple layers (RGB, depth, normal, motion), and use ZIP or PIZ lossless compression? Write a Python program using OpenEXR to read a .exr file and plot the luminance histogram.','C','I'],
+['What is a raw camera format (DNG, ARW, CR3, NEF)? How does it store the Bayer mosaic sensor data, white balance, and lens correction metadata? Write a Python program using rawpy to load a DNG and batch-convert to TIFF.','C','I'],
+['Write a C program that implements JPEG progressive encoding using libjpeg: configure jpeg_compress_struct for progressive mode (jpeg_simple_progression), encode a 4K image, and compare progressive vs baseline file size and first-scan decode time.','C','I'],
+['What is lossless JPEG (JPEG-LS, JPEG 2000 lossless)? How does JPEG-LS use the LOCO-I predictor and Golomb-Rice coding to achieve lossless compression? When is it used in medical imaging?','T','I'],
+['Write a Python image compression benchmark: encode a set of 20 test images (Kodak dataset) with JPEG (q=75), WebP (q=75), AVIF (q=50), JPEG XL (effort=7, q=75), and PNG. For each, measure compression ratio and SSIM vs the original.','C','I'],
+['Write a C TIFF reader using libtiff: open a multi-page TIFF, iterate pages with TIFFReadDirectory, read each scanline with TIFFReadScanline, and save each page as a PNG.','C','I'],
+['What is JPEG XL? How does it improve on JPEG with: better compression (35% smaller at same quality), lossless mode, HDR support, progressive decode, and a migration path from legacy JPEG (bitstream transcoding)?','T','I'],
+['Write a Python script that analyzes the quality-to-size trade-off for product images: encode 100 e-commerce product photos with JPEG at quality 60-95, WebP at quality 60-95, and AVIF at crf 20-50. Plot the Pareto front (quality vs size).','C','I'],
+['Write a C program that detects double compression artifacts (JPEG re-compression): load a JPEG, analyze DCT coefficient histograms per block, and detect the telltale periodic distribution that indicates a previous JPEG quantization.','C','A'],
+['What is image format conversion pipeline complexity? Write a C pipeline that reads a 4K RAW DNG, demosaics, applies a CCM, encodes to TIFF (lossless) and AVIF (lossy) simultaneously using libtiff and libavif.','C','A'],
+['Write a Python thumbnail generation service: given any input image (JPEG, PNG, WebP, AVIF, TIFF, EXR), decode with Pillow, resize to 256x256 maintaining aspect ratio, encode to WebP at quality 80, and cache the result.','C','B'],
+['What is ICC profile embedding? Write a C program using lcms2 and libpng to: attach an sRGB ICC profile to a PNG file, verify it with ExifTool, and apply a color transform to DCI-P3 during the save.','C','I'],
+['Write a progressive JPEG streaming server in Python: serve a large JPEG file in chunks (progressive scan order) over HTTP, so the browser displays a low-resolution version immediately and progressively sharpens.','C','I'],
+['Design an image asset pipeline for a global content delivery network: ingest original images (various formats), generate responsive variants (WebP + AVIF + JPEG fallback at 4 sizes), store in S3, serve via CDN with Accept header negotiation. Specify the conversion pipeline, quality targets, and edge caching strategy.','T','A']
+]},
+{id:'m25',phase:3,num:'25',icon:'🏗️',title:'Pipeline Architecture & System Design',desc:'Pipeline patterns, producer-consumer, backpressure, fault tolerance, monitoring, IPC, system integration.',qs:[
+['What is the producer-consumer pipeline pattern for video? Write a C implementation with two threads: a producer (V4L2 capture) and a consumer (encode), connected by a fixed-size ring buffer with a mutex + condition variable.','C','B'],
+['Write a lock-free SPSC (single-producer, single-consumer) ring buffer in C for audio samples: use atomic load/store with memory_order_acquire/release, verify correctness with a producer and consumer thread at 48kHz.','C','I'],
+['What is backpressure in a pipeline? Write a GStreamer pipeline that propagates backpressure from a slow filesink through a queue (max-size-bytes=10MB, leaky=downstream), and log when buffers are dropped.','C','I'],
+['Write a fault-tolerant V4L2 capture loop in C: handle EIO (device lost), EAGAIN (no frame yet), and EINVAL (format error). Implement reconnection with exponential backoff and resume streaming without dropping more than 5 frames.','C','I'],
+['Write a pipeline health monitor daemon in Python: check that each pipeline stage is alive (heartbeat timeout), measure throughput (frames/sec per stage), and restart a stalled stage (subprocess.Popen) automatically.','C','I'],
+['Write a multi-process video pipeline in Python using multiprocessing.Queue: process 1 captures frames, process 2 runs inference, process 3 displays results. Handle process crashes with a supervisor pattern.','C','I'],
+['Write a shared memory IPC pipeline in C using POSIX shm_open: producer writes NV12 frames to a shared memory region, consumer reads them, synchronized with POSIX semaphores. Measure latency vs pipe or socket.','C','A'],
+['Write a ZeroMQ-based distributed pipeline: publisher captures and encodes frames (zmq.PUB), two subscriber workers decode and run inference (zmq.SUB), a collector aggregates results (zmq.PUSH/PULL).','C','A'],
+['Write a pipeline state machine in C: define states (INIT, CAPTURE, PROCESS, ENCODE, STREAM, ERROR, SHUTDOWN) with event-driven transitions, handle async errors from any stage, and log all state transitions.','C','I'],
+['Write a dynamic pipeline reconfiguration system: at runtime, switch the video pipeline from 1080p30 H.264 to 720p60 H.265 without dropping the stream. Use GStreamer pad blocking and hot-swap of encoder elements.','C','A'],
+['Write a pipeline telemetry system: publish per-stage metrics (latency, queue depth, dropped frames, CPU%) to a Redis stream every 100ms. Visualize with a Grafana dashboard using the Redis data source.','C','I'],
+['Write a fault injection test for a video pipeline: randomly introduce artificial delays (sleep up to 50ms) in the encode stage, measure the effect on downstream queue overflow, and verify the pipeline recovers within 1 second.','C','I'],
+['Write a pipeline configuration hot-reload system: watch a YAML config file with inotify, apply changes (bitrate, resolution, codec) to a running GStreamer pipeline without restarting, using GStreamer property changes on live elements.','C','A'],
+['Write a priority-based frame drop policy for a real-time pipeline: when the processing queue is full, drop B-frames first, then P-frames, and always keep I-frames to maintain decodability.','C','I'],
+['Write a containerized pipeline with Docker: package a GStreamer pipeline (V4L2 -> H.264 -> RTSP server) in a Docker container with v4l2 device passthrough, NVIDIA GPU access (--gpus all), and health check.','C','I'],
+['Write a pipeline observability tool: intercept GStreamer bus messages, parse timing information, detect pipeline stalls (no buffer for 200ms), and emit structured log events to stdout in JSON format for log aggregation.','C','I'],
+['Write a multi-tenant pipeline manager in Python: manage up to 10 concurrent GStreamer pipelines (one per video source), start/stop pipelines via a REST API (FastAPI), and report per-pipeline health metrics.','C','A'],
+['Write a pipeline capacity planner in Python: given a system profile (CPU cores, GPU CUDA cores, available RAM, network bandwidth), estimate the maximum number of 1080p30 encode streams, AI inference streams, and RTSP clients simultaneously.','C','I'],
+['Write a zero-downtime pipeline upgrade system: run old and new pipeline versions in parallel on the same input, validate that the new pipeline output is equivalent (SSIM > 0.99), then atomically switch the output.','C','A'],
+['Design a video surveillance platform architecture: 200 cameras at 1080p15, edge processing (motion detection on camera), fog aggregation (10 cameras per Jetson), cloud analytics (object recognition), and storage (7-day retention). Specify the pipeline at each tier, protocols, and failure handling.','T','A']
+]},
+{id:'m26',phase:3,num:'26',icon:'📞',title:'WebRTC & Real-Time Communication',desc:'SDP, ICE, DTLS, SRTP, offer/answer, media tracks, GStreamer WebRTC, PeerConnection, signaling.',qs:[
+['What is WebRTC? Describe the full connection setup: signaling (SDP offer/answer), ICE (STUN/TURN candidate gathering), DTLS handshake (key exchange), and SRTP media flow.','T','B'],
+['What is SDP (Session Description Protocol)? Write the SDP for a WebRTC offer with one H.264 video track and one Opus audio track: include m-lines, a-rtpmap, a-fmtp, and a-ssrc attributes.','C','I'],
+['What is ICE? Describe the three candidate types: host (local IP), server-reflexive (STUN-resolved public IP), and relay (TURN server IP). How does the ICE agent prioritize and test candidate pairs?','T','I'],
+['Write a WebRTC server in Python using aiortc: create a RTCPeerConnection, add a video track (reading from a file with av.open), handle the offer (setRemoteDescription + createAnswer), and serve the SDP via aiohttp.','C','I'],
+['Write a WebRTC screen sharing program in Python using aiortc: capture the desktop using mss (screenshot library), encode frames as H.264, and send them to a browser peer.','C','A'],
+['Write a GStreamer WebRTC pipeline in Python using GstWebRTC: create webrtcbin, add video (v4l2src -> vp8enc -> rtpvp8pay) and audio (pulsesrc -> opusenc -> rtpopuspay) tracks, connect to a browser via WebSocket signaling.','C','A'],
+['Write a TURN server setup script: install coturn, configure TLS credentials, set up a long-term credential user, test connectivity with webrtc-internals, and verify the relay is used when STUN fails.','C','I'],
+['What is SRTP? How does WebRTC use DTLS-SRTP to derive symmetric keys for encrypting the RTP media? Why is it mandatory in WebRTC (no plaintext media)?','T','I'],
+['Write a WebRTC data channel program in Python using aiortc: create an RTCDataChannel, send and receive arbitrary binary messages (camera frames as JPEG), measure round-trip latency.','C','I'],
+['Write a multi-party WebRTC SFU (Selective Forwarding Unit) in Python: receive video tracks from multiple publishers, forward them to multiple subscribers without transcoding, and implement subscriber-directed quality selection (simulcast).','C','A'],
+['What is simulcast in WebRTC? How does a sender transmit the same content at 3 resolutions (720p/360p/180p) with separate SSRCs, and how does the SFU select which layer to forward based on subscriber bandwidth?','T','A'],
+['Write a WebRTC end-to-end encryption (E2EE) program: use the WebRTC Insertable Streams API (in JavaScript) to intercept RTP packets, encrypt with AES-GCM using a shared key, and decrypt on the receiver side.','C','A'],
+['Write a WebRTC quality monitoring program: parse the RTCStatsReport in JavaScript to extract round-trip time, jitter, packet loss, and bytes sent per second, and plot them in a real-time graph.','C','I'],
+['Write a GStreamer WebRTC WHIP (WebRTC HTTP Ingest Protocol) client: send a camera stream to a WHIP endpoint (e.g., Cloudflare Stream), implement the POST /whip HTTP request with SDP offer, handle 201 response with SDP answer.','C','A'],
+['What is WHEP (WebRTC HTTP Egress Protocol)? How does it standardize WebRTC playback from CDN origins, allowing standard WebRTC clients to receive streams without custom signaling?','T','A'],
+['Write a WebRTC bandwidth estimation program: enable GCC (Google Congestion Control) in GStreamer webrtcbin, artificially limit bandwidth with tc netem, and plot the estimated vs actual bandwidth over time.','C','A'],
+['Write a WebRTC noise suppression pipeline in Python: receive audio from a peer, apply RNNoise in real time (15ms frames), and send the cleaned audio back. Measure the latency overhead.','C','A'],
+['Write a WebRTC recording server: receive a WebRTC video+audio stream, mux it to an MP4 file using libavformat while it is live, handle the end-of-stream cleanly (write moov atom), and verify playback.','C','A'],
+['What is the difference between WebRTC and Zoom/Teams video? WebRTC is a protocol standard; Zoom uses proprietary signaling and SVC codecs over UDP. How do enterprise products layer on top of WebRTC protocols?','T','I'],
+['Design a WebRTC-based telepresence system for 50 simultaneous users in a virtual room: specify the topology (mesh vs SFU vs MCU), codec selection (VP8/VP9/AV1/H.264), bandwidth adaptation strategy, server infrastructure, and failover.','T','A']
+]},
+{id:'m27',phase:3,num:'27',icon:'🗣️',title:'Speech & Voice Processing',desc:'ASR, TTS, speaker diarization, VAD, beamforming, AEC, G.711/G.722/G.729, Kaldi, ESPnet, NeMo.',qs:[
+['What is automatic speech recognition (ASR)? Describe the pipeline stages: acoustic features (Mel filterbank), acoustic model (CTC/attention), language model (n-gram + neural LM), and decoder (beam search).','T','B'],
+['Write a Python Kaldi ASR inference program: load an ivector + TDNN model with kaldi.nnet3, compute MFCC features for a 5-second WAV file, run the decoder with a trigram LM, and output the transcript.','C','A'],
+['Write a Python Whisper streaming ASR pipeline: capture audio from ALSA in 30ms chunks, buffer 3 seconds, run whisper-cpp inference every 3 seconds with 500ms overlap, and output rolling transcript with word timestamps.','C','I'],
+['What is CTC (Connectionist Temporal Classification)? How does it allow training an acoustic model without frame-level alignment by marginalizing over all valid alignments using dynamic programming?','T','A'],
+['Write a Python TTS program using Kokoro-82M: synthesize 5 sentences with different speaking styles (neutral, fast, slow, US accent, UK accent), save WAVs, and compute the MOS using a UTMOS predictor.','C','I'],
+['Write an AEC (Acoustic Echo Cancellation) program in C using WebRTC APM: create an AudioProcessing object, enable echo cancellation, feed reference (speaker) and capture (microphone) frames, and output the echo-suppressed capture.','C','A'],
+['Write a microphone array beamforming program in C: implement a delay-and-sum beamformer for a 4-mic linear array at 0° (broadside): compute the per-channel delay in samples for a 500Hz signal, apply delays, and sum.','C','A'],
+['Write a Python speaker diarization pipeline with NeMo: load the ClusteringDiarizer, process a multi-speaker WAV file, output RTTM annotations, and visualize the diarization with a timeline plot.','C','A'],
+['Write a Python VAD + ASR pipeline: use Silero VAD to detect speech segments, chunk the audio at silence boundaries, run Whisper on each chunk, and assemble the transcript with accurate timestamps.','C','I'],
+['Write a Python G.711 codec transcoder: decode a G.711 µ-law (PCMU) bitstream to linear PCM using the µ-law expansion table, then re-encode to G.711 A-law (PCMA). Compute the PSNR of the roundtrip.','C','I'],
+['Write a Python noise robustness test for ASR: add 5 types of noise (AWGN, babble, car, cafeteria, music) at SNRs of 0, 5, 10, 20dB to a clean speech set, run Whisper on each condition, and plot WER vs SNR.','C','A'],
+['Write a Python speaker verification program: compute x-vectors from SpeechBrain for an enrollment utterance and a test utterance, compute cosine similarity, and output accept/reject with an EER-calibrated threshold.','C','A'],
+['Write a Python streaming TTS server using Kokoro: accept text input over WebSocket, generate speech in 50ms chunks using the streaming API, and send PCM chunks to a WebRTC client for real-time playback.','C','A'],
+['Write a C on-device ASR program using Vosk: vosk_model_new, vosk_recognizer_new, read ALSA audio in 4096-sample blocks, vosk_recognizer_accept_waveform, print the partial and final results.','C','I'],
+['What is the difference between seq2seq ASR (encoder-decoder, Whisper) and CTC-based ASR (wav2vec2, FastConformer)? Compare accuracy, streaming capability, and decoding latency.','T','I'],
+['Write a Python keyword spotting program using EdgeML Keyword Transformer: load a KWS model, process 1-second audio windows from ALSA, detect Yes/No/Hey Siri-style keywords, and trigger an action on detection.','C','I'],
+['Write a Python prosody analyzer: extract fundamental frequency (F0) with librosa.yin, energy, and duration from a speech recording, detect whether the utterance is a question (rising intonation), and output the prosody features.','C','I'],
+['Write a Python audio watermarking program: embed a 32-bit ID into a speech signal using the least significant bits of DCT coefficients (spread-spectrum watermarking), and extract it from a re-encoded AAC version.','C','A'],
+['Write a Python real-time voice changer using LibROSA: capture audio from ALSA, pitch-shift by N semitones using phase vocoder in real time (10ms blocks), and play back through a virtual sink.','C','A'],
+['Design a cloud speech processing platform: real-time ASR for 10000 concurrent calls at 16kHz/G.711 input, noise suppression, speaker diarization, keyword spotting, and transcript delivery via Kafka. Specify the model stack, GPU allocation, streaming architecture, and latency budget.','T','A']
+]},
+{id:'m28',phase:3,num:'28',icon:'🔒',title:'Security & Privacy in Media Pipelines',desc:'SRTP, HLS encryption, DRM (Widevine/FairPlay), watermarking, secure boot, credential management.',qs:[
+['What is SRTP (Secure Real-time Transport Protocol)? How does it encrypt RTP payloads with AES-CTR and authenticate with HMAC-SHA1? What are the SRTP master key and salt used for?','T','B'],
+['Write a Python program using the cryptography library to implement SRTP-style encryption: generate a master key + salt, derive session key and IV using AES-128-CM, encrypt an RTP payload, and authenticate with HMAC-SHA1.','C','I'],
+['What is HLS encryption (AES-128)? Write an FFmpeg command to produce AES-128 encrypted HLS segments with a rotating key URL in the EXT-X-KEY M3U8 tag, and serve the key via an authenticated HTTP endpoint.','C','I'],
+['What is DRM (Digital Rights Management)? Describe the Widevine content protection system: license server, encrypted media (CENC), CDM (Content Decryption Module), and the EME (Encrypted Media Extensions) browser API.','T','I'],
+['Write a CENC (Common Encryption) packaging command with shaka-packager: encrypt an MP4 with Widevine and PlayReady keys in CBCS mode, generate the MPD, and test decryption with a Widevine license server.','C','A'],
+['What is invisible watermarking for video? Write a Python program that embeds a 64-bit watermark into a video by slightly modifying DCT coefficients of I-frames (imperceptible to the eye), and extracts it after H.264 re-encoding.','C','A'],
+['Write a Python media pipeline credential manager: store API keys, RTSP passwords, and TLS certs in HashiCorp Vault (via hvac), retrieve them at pipeline startup, and rotate credentials every 24 hours without restarting the pipeline.','C','A'],
+['What is TLS mutual authentication for RTSP? Write a C GStreamer program that connects to an RTSP server with TLS (rtspsrc location=rtsps://), provides a client certificate (GLib TLS), and verifies the server certificate.','C','A'],
+['Write a Python video access control proxy: receive RTSP streams, check the viewer s JWT token (PyJWT), forward to authorized viewers only, and log access events to a SIEM (Splunk or Elasticsearch).','C','A'],
+['What is Secure Boot for embedded media devices? How does U-Boot verified boot chain verify the bootloader -> kernel -> root filesystem using RSA-2048 signatures, and how does it prevent unauthorized firmware on a Jetson?','T','A'],
+['Write a C program that implements AES-128-GCM encryption for video frames: encrypt each NV12 frame (leaving the header unencrypted for container compatibility), and decrypt on the receiver side.','C','I'],
+['Write a Python pipeline secrets rotation test: inject a new RTSP password into a running GStreamer pipeline without restarting it (using GObject property change on rtspsrc), and verify that the stream reconnects within 2 seconds.','C','A'],
+['What is a Trusted Execution Environment (TEE) for media? How does ARM TrustZone protect the DRM CDM (Content Decryption Module) from untrusted OS code, and how does the OP-TEE OS implement a TEE on ARM?','T','A'],
+['Write a Python RTMP stream authentication server: validate an RTMP stream key against a database before allowing push (nginx-rtmp-module on_publish hook), and return a 403 for unauthorized streams.','C','I'],
+['Write a C DTLS server using OpenSSL: create a DTLS-SRTP context, negotiate SRTP keys using the use_srtp extension, and derive SRTP session keys for both directions using DTLS_get_key_material.','C','A'],
+['What is content fingerprinting? How does Gracenote or YouTube Content ID compute a perceptual audio/video fingerprint and match it against a database for copyright identification?','T','I'],
+['Write a Python forensic audio watermark detector: given a suspected pirated recording, extract the embedded watermark (DCT-domain spread spectrum), recover the 64-bit owner ID, and verify against a watermark database.','C','A'],
+['Write a secure live streaming pipeline: ingest over SRT with encryption (passphrase AES-128), package to CMAF with CENC encryption, distribute via HLS with token-authenticated CDN URLs. Test end-to-end with a VLC client.','C','A'],
+['What is privacy-preserving video analytics? How do techniques like on-device inference (no video leaving the device), differential privacy for aggregate statistics, and face anonymization (blurring/pixelation) protect user privacy?','T','I'],
+['Design a DRM-protected video streaming platform for a premium sports broadcaster: ingest -> encrypt (Widevine/FairPlay) -> CDN -> multi-device playback. Specify the key rotation policy, geo-blocking, stream authentication, and watermarking for leak detection.','T','A']
+]},
+{id:'m29',phase:3,num:'29',icon:'🔌',title:'Embedded & Real-Time Media Systems',desc:'RTOS, real-time audio, ISR-driven capture, memory constraints, Yocto, BSP, latency determinism.',qs:[
+['What is a real-time operating system (RTOS)? How do FreeRTOS, Zephyr, and Linux PREEMPT_RT differ in scheduling determinism, interrupt latency, and suitability for media capture vs processing tasks?','T','B'],
+['Write a FreeRTOS task in C for audio capture from an I2S interface: create a high-priority task (pvTaskCreate), use a DMA double-buffer (ping-pong), fill an audio ring buffer from the DMA complete ISR, and signal the processing task with a binary semaphore.','C','A'],
+['Write a Linux PREEMPT_RT audio pipeline: set SCHED_FIFO priority, use mlockall(MCL_CURRENT | MCL_FUTURE) to prevent page faults, measure worst-case latency with cyclictest at 48kHz/64-sample period.','C','A'],
+['What is an I2S (Inter-IC Sound) interface? Describe the signals (BCLK, LRCLK, DATA) and how they carry stereo 24-bit audio. Write a Linux kernel driver snippet (platform_driver) that configures I2S via the ALSA SoC framework.','T','A'],
+['Write a Yocto recipe (.bb file) for a custom video processing application: inherit cmake, add ffmpeg and gstreamer-plugins-bad as DEPENDS, configure with EXTRA_OECONF, and install the binary to /usr/bin.','C','A'],
+['What is a BSP (Board Support Package)? How does a Yocto BSP layer provide kernel configuration, device tree overlays, and firmware for a custom embedded board (e.g., i.MX8M Plus)?','T','I'],
+['Write a device tree overlay in C/DTS for a Raspberry Pi camera: add a node for an IMX219 MIPI CSI-2 sensor, configure the I2C address, lanes, data-rate, and link it to the Unicam CSI receiver.','C','A'],
+['Write a C program for deterministic V4L2 capture on a real-time Linux system: set V4L2 buffer count = 2, set capture thread to SCHED_FIFO priority 90, measure jitter between consecutive buffer timestamps, verify < 500µs at 30fps.','C','A'],
+['Write an embedded audio pipeline in C using a DMA ring buffer: ISR writes 512 samples per interrupt into a ring buffer, a SCHED_FIFO task reads and processes blocks, verify that no samples are dropped at 48kHz for 1 hour.','C','A'],
+['What is DMA scatter-gather for embedded video? Write a kernel module snippet that configures a DMA scatter-gather list for multi-plane NV12 capture (Y and UV planes in separate DMA descriptors).','C','A'],
+['Write a memory-constrained image processing pipeline for a microcontroller (256KB RAM): process a 320x240 grayscale image in horizontal strips of 16 rows, run a 3x3 Sobel filter, and output the edge image to SPI flash.','C','A'],
+['Write a GStreamer pipeline for a headless embedded Linux board: v4l2src -> nvv4l2h264enc -> rtph264pay -> udpsink, autostart on boot with a systemd service, and restart on failure with Restart=always.','C','I'],
+['Write an embedded H.264 decode program using V4L2 M2M on a Rockchip RK3568: open the M2M decoder node, set H.264 input format, NV12 output format, queue NAL units from a file, dequeue decoded frames, and display with DRM/KMS.','C','A'],
+['Write a camera watchdog in C for embedded Linux: monitor V4L2 frame timestamps with CLOCK_MONOTONIC, detect a frame gap > 200ms, log an error to a ring buffer in persistent memory, and trigger a camera reset via GPIO.','C','A'],
+['What is the Zephyr RTOS audio subsystem? Write a Zephyr application that opens an I2S TX stream, fills DMA buffers with a 440Hz sine wave from a high-priority thread, and handles the DMA callback without dropping samples.','C','A'],
+['Write a Yocto custom image recipe: create an image (image.bb) that installs gstreamer1.0-plugins-base, gstreamer1.0-plugins-bad, libopus, and a custom systemd service for the video pipeline. Build with bitbake.','C','A'],
+['Write a Linux kernel module for a custom MIPI CSI-2 camera sensor: implement probe/remove, configure sensor registers via I2C (i2c_transfer), register with the V4L2 subdev framework (v4l2_subdev_register), and handle runtime power management.','C','A'],
+['Write an embedded image compression pipeline: capture 480p NV12 at 30fps from V4L2, encode to MJPEG with libturbojpeg on an embedded ARM Cortex-A53, target < 200ms end-to-end latency, and stream over UDP.','C','A'],
+['Write a power management strategy for an embedded camera module: implement V4L2 power control (VIDIOC_S_POWER), suspend the sensor when no consumer is reading, wake it on demand, and measure the power savings with INA219 current monitor.','C','A'],
+['Design an embedded media pipeline for a battery-powered IP camera: IMX415 sensor -> MIPI CSI -> ISP -> H.265 hardware encoder -> SD card + RTSP stream, with motion-triggered capture (PIR + video motion detection), sleep between events. Specify the SoC (e.g., Ambarella or Rockchip), pipeline latency, and power budget (target < 2W average).','T','A']
+]},
+{id:'m30',phase:3,num:'30',icon:'🏆',title:'IVA Mastery — System Design & Interview Prep',desc:'Full system design, cross-cutting questions, IVA interview prep, architecture trade-offs, career path.',qs:[
+['Design a real-time video surveillance system: 100 cameras at 1080p30, H.265 hardware encode at the camera, edge aggregation nodes (Jetson), cloud analytics (YOLOv8), 30-day storage. Specify the full pipeline.','T','A'],
+['You need to reduce the latency of a live streaming pipeline from 8 seconds to under 2 seconds. Walk through: codec (H.264 low-latency), packaging (LL-HLS/LL-DASH), CDN config, player buffer tuning, and measurement.','T','A'],
+['Compare GStreamer vs FFmpeg vs libav for building a production video pipeline. When would you choose each: rapid prototyping, production robustness, framework integration, hardware acceleration?','T','I'],
+['A V4L2 capture program drops 5% of frames at 60fps. Describe your diagnostic process: check V4L2_BUF_FLAG_ERROR, measure capture jitter, profile CPU with perf, check USB bandwidth, test with larger buffer count.','T','I'],
+['Design the audio pipeline for a voice assistant: 4-mic array -> ALSA capture -> beamforming -> AEC -> VAD -> Whisper ASR -> NLU -> TTS -> ALSA playback. Specify latency budget, thread architecture, and failure modes.','T','A'],
+['How would you implement frame-accurate audio/video synchronization for a broadcast playout system? Describe: PTS/DTS alignment, clock recovery from PCR, audio resampling for drift correction, and monitoring.','T','A'],
+['You are tasked with building a zero-copy GPU video analytics pipeline for a smart factory. Describe the buffer sharing strategy (DMA-BUF), GPU pipeline (NVDEC -> TensorRT), and the synchronization primitives.','T','A'],
+['Compare H.264, H.265, AV1, and VP9 for a live sports streaming platform: encoding complexity, decoder support, latency at given bitrate, and CDN compatibility. Which would you choose for 2025 deployment?','T','I'],
+['Explain the trade-offs between software and hardware video encode for a transcoding farm: libx264 vs h264_nvenc vs vaapih264enc. When does hardware encode quality match software?','T','I'],
+['Design an IVA pipeline for an autonomous robot: stereo camera -> disparity -> depth -> obstacle detection -> path planning. Specify: camera sync, compute hardware, latency budget, and failure recovery.','T','A'],
+['A GStreamer pipeline stutters every 30 seconds. Walk through your debugging approach: GST_DEBUG, pipeline graph dump, buffer timestamp analysis, kernel scheduling check, and memory pressure investigation.','T','I'],
+['How do you measure the true end-to-end latency of a video pipeline from the camera shutter to the display? Describe the measurement setup (LED + high-speed camera or audio tone + recording) and the calculation.','T','I'],
+['Compare Opus, AAC, and MP3 for a podcast streaming platform: quality at 64kbps, browser support, encoding latency, and CDN cache efficiency. Which would you recommend and why?','T','B'],
+['Design a multi-camera 3D reconstruction pipeline for an e-commerce product photographer: 12 synchronized cameras, capture -> calibration -> COLMAP SfM -> MVS depth -> mesh -> texture. Specify hardware, software, and capture time.','T','A'],
+['Explain how WebRTC works to a junior developer in 5 minutes: signaling (SDP), connectivity (ICE/STUN/TURN), encryption (DTLS-SRTP), and media flow (RTP/RTCP).','T','B'],
+['A hardware H.264 encoder (VAAPI) produces poor quality at 2Mbps compared to libx264. How do you investigate: rate control mode, B-frame support, reference frames, QP limits, and driver bugs?','T','I'],
+['How would you build a privacy-compliant video analytics system that detects crowd density without storing identifiable video? Describe on-device inference, aggregation, differential privacy, and audit logging.','T','A'],
+['Design the audio infrastructure for a global live concert streaming platform: on-site capture (Dante/AES67) -> cloud ingest -> real-time mixing -> HLS packaging -> CDN. Target latency < 5 seconds, 24-bit/96kHz.','T','A'],
+['You are interviewing at NVIDIA for a video SDK engineer role. Walk through how you would implement a zero-copy V4L2 -> NVDEC -> TensorRT -> NvDRM/KMS display pipeline on a Jetson AGX Orin.','T','A'],
+['You have 5 minutes to explain the Image/Video/Audio stack to a software developer with no media background. Cover: why we need codecs, how a camera frame becomes a streaming video, and what GStreamer does.','T','B']
+]},
+];
+
+const SKEY = 'iva_mastery_v1';
+const GH_REPO = 'Srivathsan98/IVA-Mastery';
+
+const ST={};
+try{Object.assign(ST,JSON.parse(localStorage.getItem(SKEY)||'{}'));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(ST));}catch(e){}}
+function k(mid,qi){return mid+'_'+qi;}
+function isChecked(mid,qi){return!!ST[k(mid,qi)];}
+function toggle(mid,qi){ST[k(mid,qi)]=!ST[k(mid,qi)];save();refreshAll(mid,qi);}
+function saveIssue(mid,qi,val){
+  const ik='iss_'+mid+'_'+qi;
+  if(val.trim()){ST[ik]=val.trim();}else{delete ST[ik];}
+  save();
+  const link=document.getElementById('issl-'+mid+'-'+qi);
+  if(link){if(val.trim()){link.href='https://github.com/'+GH_REPO+'/issues/'+val.trim();link.className='issue-open active';}else{link.href='#';link.className='issue-open';}}
+}
+function modStats(m){let d=0;m.qs.forEach((_,i)=>{if(isChecked(m.id,i))d++;});return{done:d,total:m.qs.length};}
+function allStats(){let d=0,t=0,md=0;MODULES.forEach(m=>{const s=modStats(m);d+=s.done;t+=s.total;if(s.done===s.total&&s.total>0)md++;});return{done:d,total:t,modsDone:md};}
+function refreshAll(mid,qi){
+  const row=document.getElementById('row-'+mid+'-'+qi);
+  if(row){const c=isChecked(mid,qi);row.className=c?'checked':'';const cc=row.querySelector('.cb-check');if(cc)cc.style.display=c?'block':'none';}
+  const m=MODULES.find(x=>x.id===mid);
+  const s=modStats(m);const pct=s.total?Math.round(s.done/s.total*100):0;
+  const fill=document.getElementById('mfill-'+mid);if(fill)fill.style.width=pct+'%';
+  const cnt=document.getElementById('mcnt-'+mid);if(cnt)cnt.textContent=s.done+'/'+s.total;
+  const badge=document.getElementById('mbadge-'+mid);
+  if(badge){if(pct===0){badge.className='mod-badge badge-ns';badge.textContent='Not started';}else if(pct<100){badge.className='mod-badge badge-ip';badge.textContent=pct+'% done';}else{badge.className='mod-badge badge-done';badge.textContent='Mastered \u2713';}}
+  const ms=document.getElementById('ms-pct-'+mid);if(ms)ms.textContent=pct+'%';
+  const mpf=document.getElementById('ms-fill-'+mid);if(mpf)mpf.style.width=pct+'%';
+  const as=allStats();const ap=as.total?Math.round(as.done/as.total*100):0;
+  document.getElementById('done-count').textContent=as.done;
+  document.getElementById('total-count').textContent=as.total;
+  document.getElementById('pct-label').textContent=ap+'%';
+  document.getElementById('mod-done').textContent=as.modsDone;
+  document.getElementById('overall-fill').style.width=ap+'%';
+  const btn=document.getElementById('nav-'+mid);
+  if(btn)btn.className='mod-btn'+(pct===100?' done':pct>0?' partial':'');
+}
+let curPhase=0;
+function filterPhase(p){
+  curPhase=p;
+  document.querySelectorAll('.phase-btn').forEach((b,i)=>b.className='phase-btn'+(i===p?' active':''));
+  renderContent();
+}
+function renderModNav(){
+  const as=allStats();document.getElementById('s-total').textContent=as.total;
+  let h='';
+  MODULES.forEach(m=>{const s=modStats(m);const p=s.total?Math.round(s.done/s.total*100):0;
+    h+=`<button id="nav-${m.id}" class="mod-btn${p===100?' done':p>0?' partial':''}" onclick="jumpToModule('${m.id}')">${m.num}</button>`;
+  });
+  document.getElementById('mod-nav').innerHTML=h;
+}
+function jumpToModule(id){const el=document.getElementById('card-'+id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});if(!el.classList.contains('open'))el.classList.add('open');}}
+function toggleModule(id){document.getElementById('card-'+id).classList.toggle('open');}
+function renderContent(){
+  const phases=curPhase===0?[1,2,3]:[curPhase];
+  const pl={1:'Phase 01 \u00b7 Capture & Image Processing',2:'Phase 02 \u00b7 Video Codecs & Audio',3:'Phase 03 \u00b7 AI Pipelines, Streaming & Advanced'};
+  const TM={'T':'theory','C':'code','D':'debug'};
+  const TC={'T':'tag-theory','C':'tag-code','D':'tag-debug'};
+  const DM={'B':'Beginner','I':'Intermediate','A':'Advanced'};
+  const DC={'B':'diff-B','I':'diff-I','A':'diff-A'};
+  let h='';
+  phases.forEach(ph=>{
+    const mods=MODULES.filter(m=>m.phase===ph);
+    h+=`<div class="phase-header">${pl[ph]} \u2014 ${mods.length} modules</div>`;
+    mods.forEach(m=>{
+      const s=modStats(m);const pct=s.total?Math.round(s.done/s.total*100):0;
+      let bc='mod-badge badge-ns',bt='Not started';
+      if(pct>0&&pct<100){bc='mod-badge badge-ip';bt=pct+'% done';}else if(pct===100){bc='mod-badge badge-done';bt='Mastered \u2713';}
+      h+=`<div class="module" id="card-${m.id}"><div class="module-head" onclick="toggleModule('${m.id}')"><div class="module-num">${m.num}</div><div class="module-icon">${m.icon}</div><div class="module-info"><div class="module-title">${m.title}</div><div class="module-desc">${m.desc}</div></div><div class="module-right"><div class="mod-count" id="mcnt-${m.id}">${s.done}/${s.total}</div><div class="${bc}" id="mbadge-${m.id}">${bt}</div></div><div class="module-chevron">&#9654;</div></div><div class="mod-bar"><div class="mod-bar-fill" id="mfill-${m.id}" style="width:${pct}%"></div></div><div class="module-body"><div class="mod-stats"><div class="ms">Done: <span>${s.done}</span>/${s.total}</div><div class="ms">Progress: <span id="ms-pct-${m.id}">${pct}%</span></div><div class="mod-prog-bar"><div class="mod-prog-fill" id="ms-fill-${m.id}" style="width:${pct}%"></div></div></div><div class="q-table-wrap"><table><thead><tr><th></th><th>#</th><th>Question</th><th>Type</th><th>Difficulty</th><th>GitHub</th></tr></thead><tbody>`;
+      m.qs.forEach((q,qi)=>{
+        const c=isChecked(m.id,qi);const issVal=ST['iss_'+m.id+'_'+qi]||'';
+        const typ=q[1]||'T',diff=q[2]||'I';
+        const qtext=q[0].replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        h+=`<tr id="row-${m.id}-${qi}" class="${c?'checked':''}" onclick="toggle('${m.id}',${qi})"><td><div class="cb"><span class="cb-check" style="display:${c?'block':'none'}">&#10003;</span></div></td><td class="q-num">${qi+1}</td><td class="q-text">${qtext}</td><td><span class="tag ${TC[typ]}">${TM[typ]}</span></td><td><span class="diff ${DC[diff]}">${DM[diff]}</span></td><td class="issue-cell" onclick="event.stopPropagation()"><input class="issue-input" id="iss-${m.id}-${qi}" type="text" placeholder="#" value="${issVal}" onchange="saveIssue('${m.id}',${qi},this.value)" /><a class="issue-open${issVal?' active':''}" id="issl-${m.id}-${qi}" href="${issVal?'https://github.com/'+GH_REPO+'/issues/'+issVal:'#'}" target="_blank">${issVal?'#'+issVal:'--'}</a></td></tr>`;
+      });
+      h+=`</tbody></table></div></div></div>`;
+    });
+  });
+  document.getElementById('content').innerHTML=h;
+}
+renderModNav();renderContent();
+const _as=allStats();const _ap=_as.total?Math.round(_as.done/_as.total*100):0;
+document.getElementById('done-count').textContent=_as.done;
+document.getElementById('total-count').textContent=_as.total;
+document.getElementById('pct-label').textContent=_ap+'%';
+document.getElementById('mod-done').textContent=_as.modsDone;
+document.getElementById('overall-fill').style.width=_ap+'%';
+</script>
+</body>
+</html>
